@@ -273,6 +273,7 @@
                     <input type="hidden" id="csrfHash" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" style="display: none">
                     <div class="modal-body">
                         <div class="row">
+                            <input type="hidden" name="id" required/>
 	                        <div class="col-md-12">
 	                        	<div class="form-group">
 		                            <label >Nama</label>

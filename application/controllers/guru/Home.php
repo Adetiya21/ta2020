@@ -19,21 +19,81 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		$data['title'] = 'Dashboard';
-		$data['siswa'] = $this->DButama->GetDBWhere('tb_siswa', array('id_kelas' => $this->session->userdata('id_kelas') ))->num_rows();
+		$data['siswa'] = $this->DButama->GetDB('tb_siswa')->num_rows();
 		$data['nsiswa'] = $this->DButama->GetDBWhere('tb_nilaisiswa', array('id_mapel' => $this->session->userdata('id_mapel') ))->num_rows();
 		$data['guru'] = $this->DButama->GetDBWhere('tb_guru', array('id_mapel' => $this->session->userdata('id_mapel') ))->num_rows();
-		$data['kelas'] = $this->DButama->GetDBWhere('tb_kelas', array('id' => $this->session->userdata('id_kelas') ))->row();
+		// $data['kls'] = $this->DButama->GetDBWhere('tb_kelas', array('id' => $this->session->userdata('id_kelas') ))->row();
 		$data['mapel'] = $this->DButama->GetDBWhere('tb_mapel', array('id' => $this->session->userdata('id_mapel') ))->row();
 
-		$where = array('tb_nilaisiswa.id_mapel' => $this->session->userdata('id_mapel'));
-		$where1 = array('tb_nilaisiswa.id_kelas' => $this->session->userdata('id_kelas'));
+		// kelas 1
+		$data['sw1'] = $this->DButama->GetDBWhere('tb_siswa', array('id_kelas' => '101'))->num_rows();
+		$where = array('id_mapel' => $this->session->userdata('id_mapel'));
+		$where1 = array('id_kelas' => '101');
 		$query = $this->db->where($where);
 		$query = $this->db->where($where1);	
-		$query = $this->db->select('id, sum(h1) as jh1, sum(h2) as jh2, sum(h3) as jh3, sum(uts) as juts, sum(uas) as juas, sum(total) as jtotal, sum(rata) as jrata');	
+		$query = $this->db->select('id, sum(rata) as jrata');	
 		$query = $this->db->from('tb_nilaisiswa');
 		$query = $this->db->get();
-		$data['nilai'] = $query->row();
+		$data['kls1'] = $query->row();
+
+		// kelas 2
+		$data['sw2'] = $this->DButama->GetDBWhere('tb_siswa', array('id_kelas' => '102'))->num_rows();
+		$where = array('id_mapel' => $this->session->userdata('id_mapel'));
+		$where1 = array('id_kelas' => '102');
+		$query = $this->db->where($where);
+		$query = $this->db->where($where1);	
+		$query = $this->db->select('id, sum(rata) as jrata');	
+		$query = $this->db->from('tb_nilaisiswa');
+		$query = $this->db->get();
+		$data['kls2'] = $query->row();
+
+		// kelas 3
+		$data['sw3'] = $this->DButama->GetDBWhere('tb_siswa', array('id_kelas' => '103'))->num_rows();
+		$where = array('id_mapel' => $this->session->userdata('id_mapel'));
+		$where1 = array('id_kelas' => '103');
+		$query = $this->db->where($where);
+		$query = $this->db->where($where1);	
+		$query = $this->db->select('id, sum(rata) as jrata');	
+		$query = $this->db->from('tb_nilaisiswa');
+		$query = $this->db->get();
+		$data['kls3'] = $query->row();
+
+		// kelas 4
+		$data['sw4'] = $this->DButama->GetDBWhere('tb_siswa', array('id_kelas' => '104'))->num_rows();
+		$where = array('id_mapel' => $this->session->userdata('id_mapel'));
+		$where1 = array('id_kelas' => '104');
+		$query = $this->db->where($where);
+		$query = $this->db->where($where1);	
+		$query = $this->db->select('id, sum(rata) as jrata');	
+		$query = $this->db->from('tb_nilaisiswa');
+		$query = $this->db->get();
+		$data['kls4'] = $query->row();
+
+		// kelas 5
+		$data['sw5'] = $this->DButama->GetDBWhere('tb_siswa', array('id_kelas' => '105'))->num_rows();
+		$where = array('id_mapel' => $this->session->userdata('id_mapel'));
+		$where1 = array('id_kelas' => '105');
+		$query = $this->db->where($where);
+		$query = $this->db->where($where1);	
+		$query = $this->db->select('id, sum(rata) as jrata');	
+		$query = $this->db->from('tb_nilaisiswa');
+		$query = $this->db->get();
+		$data['kls5'] = $query->row();
+
+		// kelas 6
+		$data['sw6'] = $this->DButama->GetDBWhere('tb_siswa', array('id_kelas' => '106'))->num_rows();
+		$where = array('id_mapel' => $this->session->userdata('id_mapel'));
+		$where1 = array('id_kelas' => '106');
+		$query = $this->db->where($where);
+		$query = $this->db->where($where1);	
+		$query = $this->db->select('id, sum(rata) as jrata');	
+		$query = $this->db->from('tb_nilaisiswa');
+		$query = $this->db->get();
+		$data['kls6'] = $query->row();
 		
+		$data['kelas'] = $this->db->order_by('nama_kelas', 'asc');
+		$data['kelas'] = $this->DButama->GetDB('tb_kelas');
+			
 		$this->load->view('guru/temp-header',$data);
 		$this->load->view('guru/v_index',$data);
 		$this->load->view('guru/temp-footer');
@@ -43,13 +103,13 @@ class Home extends CI_Controller {
 	{
 		$cek = $this->DButama->GetDBWhere($this->table,array('nip'=> $nip));
 		if ($cek->num_rows() == 1) {
-			$title = array('title' => 'Profil', );
+			$data['title'] = 'Profil';
 			$data['kelas'] = $this->db->order_by('nama_kelas', 'asc');
 			$data['kelas'] = $this->DButama->GetDB('tb_kelas');
 			$data['mapel'] = $this->db->order_by('nama_mapel', 'asc');
 			$data['mapel'] = $this->DButama->GetDB('tb_mapel');
 			$data['profil'] = $cek->row();
-			$this->load->view('guru/temp-header',$title);
+			$this->load->view('guru/temp-header',$data);
 			$this->load->view('guru/v_profil',$data);
 			$this->load->view('guru/temp-footer');
 		}else{
@@ -87,7 +147,9 @@ class Home extends CI_Controller {
 					'alamat' => $this->input->post('alamat'),
 					'password' => $hash
 				);
-
+				$sess_data['nama'] = $this->input->post('nama');
+				$this->session->set_userdata($sess_data);
+			
 				$this->DButama->UpdateDB($this->table,$where,$data);
 				$this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible" role="alert">
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

@@ -20,34 +20,69 @@ class Nilai extends CI_Controller {
 		$this->load->model('m_nilai','Model');
 	}
 
-	public function json() {
+	// public function json() {
+	// 	if ($this->input->is_ajax_request()) {
+	// 		header('Content-Type: application/json');
+	// 		echo $this->Model->json_guru();
+	// 	}
+	// }
+
+	public function json($id_kelas) {
 		if ($this->input->is_ajax_request()) {
 			header('Content-Type: application/json');
-			echo $this->Model->json_guru();
+			echo $this->Model->jsonguru($id_kelas);
 		}
 	}
 
 	public function index()
 	{
-		$data['kelas'] = $this->db->order_by('nama_kelas', 'asc');
-		$data['kelas'] = $this->DButama->GetDB('tb_kelas');
-		$data['mapel'] = $this->DButama->GetDB('tb_mapel')->row();
-		$title = array('title' => 'Data Nilai Siswa', );
-		$this->load->view('guru/temp-header',$title);
-		$this->load->view('guru/v_nilai',$data);
-		$this->load->view('guru/temp-footer');
+		redirect('guru/nilai/kelas/101','refresh');
 	}
 
-	public function cetak()
+	public function kelas($id_kelas)
 	{
-		$data['kelas'] = $this->db->order_by('nama_kelas', 'asc');
-		$data['kelas'] = $this->DButama->GetDB('tb_kelas');
-		$data['mapel'] = $this->DButama->GetDB('tb_mapel');
-		$cek = $this->DButama->GetDBWhere($this->tablemapel,array('id'=> $this->session->userdata('id_mapel')));
-		$data['title'] = 'Data Nilai Siswa '.$cek->row('nama_mapel');
-		$this->load->view('guru/temp-header-cetak',$data);
-		$this->load->view('guru/v_cetak-nilai',$data);
-		$this->load->view('guru/temp-footer');
+		$cek = $this->DButama->GetDBWhere($this->tablekelas,array('id'=> $id_kelas));
+		if ($cek->num_rows() == 1) {
+			$cek1 = $this->DButama->GetDBWhere($this->tablemapel,array('id'=> $this->session->userdata('id_mapel')));
+			if ($cek1->num_rows() == 1) {
+				$data['kl1'] = $id_kelas;
+				$data['mapel'] = $this->DButama->GetDB('tb_mapel')->row();
+				$data['kelas'] = $this->DButama->GetDB('tb_kelas');
+				$data['kls'] = $cek->row();
+				$data['mp'] = $cek1->row();
+				$data['title'] = 'Data Nilai '.$cek->row('nama_kelas').' '.$cek1->row('nama_mapel');
+				$this->load->view('guru/temp-header',$data);
+				$this->load->view('guru/v_nilai',$data);
+				$this->load->view('guru/temp-footer');
+			} else {
+			redirect('error404','refresh');
+			}
+		} else {
+			redirect('error404','refresh');
+		}
+	}
+
+	public function cetak($id_kelas)
+	{
+		$cek = $this->DButama->GetDBWhere($this->tablekelas,array('id'=> $id_kelas));
+		if ($cek->num_rows() == 1) {
+			$cek1 = $this->DButama->GetDBWhere($this->tablemapel,array('id'=> $this->session->userdata('id_mapel')));
+			if ($cek1->num_rows() == 1) {
+				$data['kl1'] = $id_kelas;
+				$data['mapel'] = $this->DButama->GetDB('tb_mapel')->row();
+				$data['kelas'] = $this->DButama->GetDB('tb_kelas');
+				$data['kls'] = $cek->row();
+				$data['mp'] = $cek1->row();
+				$data['title'] = 'Data Nilai '.$cek->row('nama_kelas').' '.$cek1->row('nama_mapel');
+				$this->load->view('guru/temp-header-cetak',$data);
+				$this->load->view('guru/v_cetak-nilai',$data);
+				$this->load->view('guru/temp-footer');
+			} else {
+			redirect('error404','refresh');
+			}
+		} else {
+			redirect('error404','refresh');
+		}
 	}
 
 	//edit

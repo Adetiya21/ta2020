@@ -2,7 +2,7 @@
 <script>
     $(document).ready(function() {
       $('.siswa').addClass('active');
-  	});
+    });
 
     function check_int(evt) {
       var charCode = ( evt.which ) ? evt.which : event.keyCode;
@@ -11,69 +11,72 @@
 </script>
 
 <div class="pcoded-content">
-	<div class="page-header card">
-		<div class="row align-items-end">
-			<div class="col-lg-8">
-				<div class="page-header-title">
-					<i class="feather icon-layout bg-c-blue"></i>
-					<div class="d-inline">
-						<h5>Siswa Mata Pelajaran
-                            <?php if ($mapel->id==$this->session->userdata('id_mapel')) {
-                                echo $mapel->nama_mapel;
+    <div class="page-header card">
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <i class="feather icon-layout bg-c-blue"></i>
+                    <div class="d-inline">
+                        <h5>Siswa
+                            <?php foreach ($kelas->result() as $key) {
+                                if ($key->id==$kls) {
+                                    echo $key->nama_kelas;
+                                }
                             } ?>
                         </h5>
-						<span>Berikut data para siswa.</span>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4">
-				<div class="page-header-breadcrumb">
-					<ul class=" breadcrumb breadcrumb-title">
-						<li class="breadcrumb-item">
-							<a href="<?= site_url('guru/home') ?>"><i class="feather icon-home"></i></a>
-						</li>
-						<li class="breadcrumb-item">
-							<a href="<?= site_url('guru/siswa') ?>">Siswa</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+                        <span>Berikut data para siswa.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="page-header-breadcrumb">
+                    <ul class=" breadcrumb breadcrumb-title">
+                        <li class="breadcrumb-item">
+                            <a href="<?= site_url('guru/home') ?>"><i class="feather icon-home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="<?= site_url('guru/siswa') ?>">Siswa</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div class="pcoded-inner-content">
-		<div class="main-body">
-			<div class="page-wrapper">
-				<div class="page-body">
-					<div class="card">
-						<div class="card-header">
-							<h5>Data Siswa</h5>
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Data Siswa</h5>
                             <div class="card-header-right"> <ul class="list-unstyled card-option"> <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li> <li><i class="feather icon-maximize full-card"></i></li> <li><i class="feather icon-minus minimize-card"></i></li> <li><i class="feather icon-refresh-cw reload-card"></i></li> <li><i class="feather icon-trash close-card"></i></li> <li><i class="feather icon-chevron-left open-card-option"></i></li> </ul> </div>
-						</div>
-						<div class="card-block">
-							<div class="dt-responsive table-responsive">
-								<table id="compact" class="table table-bordered table-hover nowrap" width="100%">
-									<thead>
-										<tr><th width="1%">No</th>
-										<th>NIS</th>
-										<th>Nama Siswa</th>
-										<th>Kelas</th>
-										<th width="10%">Action</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                        </div>
+                        
+                        <div class="card-block">
+                            <div class="dt-responsive">
+                                <table id="compact" class="table table-responsive table-bordered table-hover nowrap" width="100%">
+                                    <thead>
+                                        <tr><th width="1%">No</th>
+                                        <th>NIS</th>
+                                        <th>Nama Siswa</th>
+                                        <th>Kelas</th>
+                                        <th width="10%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div id="styleSelector">
-		</div>
-	</div>
+        <div id="styleSelector">
+        </div>
+    </div>
 </div>
 
 <!-- DataTables -->
@@ -112,7 +115,7 @@
         },
         processing: true,
         serverSide: true,
-        ajax: {"url": "<?= base_url() ?>guru/siswa/json", "type": "POST"},
+        ajax: {"url": "<?= base_url() ?>guru/siswa/json/<?= $kls ?>", "type": "POST"},
         columns: [
         {
             "data": "nis",
@@ -122,27 +125,7 @@
         {"data": "nama"},
         {"data": "nama_kelas",
             render: function(data) { 
-                if(data==='Kelas 1') {
                   return '<label class="label label-lg label-inverse-danger" style="width:100%; text-align:center">'+data+'</label>'
-                }
-                else if(data==='Kelas 2') {
-                  return '<label class="label label-lg label-inverse-warning" style="width:100%; text-align:center">'+data+'</label>'
-                } 
-                else if(data==='Kelas 3') {
-                  return '<label class="label label-lg label-inverse-succes" style="width:100%; text-align:center">'+data+'</label>'
-                } 
-                else if(data==='Kelas 4') {
-                  return '<label class="label label-lg label-inverse-primary" style="width:100%; text-align:center">'+data+'</label>'
-                }
-                else if(data==='Kelas 5') {
-                  return '<label class="label label-lg label-inverse-info" style="width:100%; text-align:center">'+data+'</label>'
-                }
-                else if(data==='Kelas 6') {
-                  return '<label class="label label-lg label-inverse" style="width:100%; text-align:center">'+data+'</label>'
-                } else {
-                    return '<label class="label label-lg label-inverse-default" style="width:100%; text-align:center">'+data+'</label>'
-                }
-
               },
               defaultContent: 'Tidak ada data'
             
@@ -166,7 +149,7 @@
         table.ajax.reload(null,false); //reload datatable ajax
     }
 
-    //fun view
+    //fun edit
     function view(nis)
     {
         save_method = 'update';
@@ -221,23 +204,23 @@
                     <input type="hidden" id="csrfHash" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" style="display: none">
                     <div class="modal-body">
                         <div class="row">
-	                        <div class="col-md-6">
-	                        	<div class="form-group">
-		                            <label >NIS</label>
-		                            <input type="text" class="form-control" placeholder="NIS" name="nis" required maxlength="13" onkeypress='return check_int(event)'/>
-		                            <span class="help-block"></span>
-		                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label >NIS</label>
+                                    <input type="text" class="form-control" placeholder="NIS" name="nis" required maxlength="13" onkeypress='return check_int(event)'/>
+                                    <span class="help-block"></span>
+                                </div>
                                 <div class="form-group">
                                     <label >Password</label>
                                     <input type="password" class="form-control" placeholder="Isi Password!" name="password" required />
                                     <span class="help-block"></span>
                                 </div>
                                 <br><hr>
-	                        	<div class="form-group">
-		                            <label >Nama Siswa</label>
-		                            <input type="text" class="form-control" placeholder="Nama Siswa" name="nama" required/>
-		                            <span class="help-block"></span>
-		                        </div>
+                                <div class="form-group">
+                                    <label >Nama Siswa</label>
+                                    <input type="text" class="form-control" placeholder="Nama Siswa" name="nama" required/>
+                                    <span class="help-block"></span>
+                                </div>
                                 <div class="form-group">
                                     <label>Kelas</label>
                                     <select name="id_kelas" class="form-control">
@@ -248,7 +231,7 @@
                                     </select>
                                     <span class="help-block"></span>
                                 </div>                              
-	                        </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label >Tempat / Tanggal Lahir</label>
@@ -291,7 +274,7 @@
                                     <span class="help-block"></span>
                                 </div>
                             </div>
-		                </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -354,7 +337,7 @@
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">

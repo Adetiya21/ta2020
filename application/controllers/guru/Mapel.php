@@ -26,8 +26,10 @@ class Mapel extends CI_Controller {
 
 	public function index()
 	{
-		$title = array('title' => 'Data Mata Pelajaran', );
-		$this->load->view('guru/temp-header',$title);
+		$data['title'] = 'Data Mata Pelajaran' ;
+		$data['kelas'] = $this->db->order_by('nama_kelas', 'asc');
+		$data['kelas'] = $this->DButama->GetDB('tb_kelas');
+		$this->load->view('guru/temp-header',$data);
 		$this->load->view('guru/v_mapel');
 		$this->load->view('guru/temp-footer');
 	}

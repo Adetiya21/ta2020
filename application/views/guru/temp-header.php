@@ -138,25 +138,61 @@
 										</a>
 									</li>
 
-									<li class="siswa">
+									<!-- <li class="siswa">
 										<a href="<?= site_url('guru/siswa') ?>" class="waves-effect waves-dark">
 											<span class="pcoded-micon">
 												<i class="feather icon-users"></i>
 											</span>
 											<span class="pcoded-mtext">Siswa</span>
 										</a>
+									</li> -->
+
+									<li class="siswa pcoded-hasmenu">
+										<a href="javascript:void(0)" class="waves-effect waves-dark">
+											<span class="pcoded-micon">
+												<i class="feather icon-users"></i>
+											</span>
+											<span class="pcoded-mtext">Siswa</span>
+										</a>
+										<ul class="pcoded-submenu">
+											<?php foreach ($kelas->result() as $key) { ?>
+											<li class="data-pdft">
+												<a href="<?= site_url('guru/siswa/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
+													<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
+												</a>
+											</li>
+											<?php } ?>
+										</ul>
+									</li>
+									
+									<li class="nilai pcoded-hasmenu">
+										<a href="javascript:void(0)" class="waves-effect waves-dark">
+											<span class="pcoded-micon">
+												<i class="feather icon-book"></i>
+											</span>
+											<span class="pcoded-mtext">Penilaian</span>
+										</a>
+										<ul class="pcoded-submenu">
+											<?php foreach ($kelas->result() as $key) { ?>
+											<li class="data-pdft">
+												<a href="<?= site_url('guru/nilai/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
+													<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
+												</a>
+											</li>
+											<?php } ?>
+										</ul>
 									</li>
 
-									<li class="nilai">
+									<!-- <li class="nilai">
 										<a href="<?= site_url('guru/nilai') ?>" class="waves-effect waves-dark">
 											<span class="pcoded-micon">
 												<i class="feather icon-book"></i>
 											</span>
 											<span class="pcoded-mtext">Penilaian</span>
 										</a>
-									</li>
+									</li> -->
 								</ul><hr>
-								<div class="pcoded-navigation-label" style="position:absolute;bottom: 0;left: 20%; text-align: center;">Copyright© 2020<br>Allrights Reserved.</div>
+								<div class="pcoded-navigation-label" style="text-align: center;">Copyright© 2020<br>Allrights Reserved.</div>
 
 							</div>
 						</nav>

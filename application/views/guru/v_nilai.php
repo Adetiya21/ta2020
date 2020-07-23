@@ -17,13 +17,13 @@
 				<div class="page-header-title">
 					<i class="feather icon-layout bg-c-blue"></i>
 					<div class="d-inline">
-						<h5>Penilaian Mata Pelajaran
-                            <?php if ($mapel->id==$this->session->userdata('id_mapel')) {
-                                echo $mapel->nama_mapel;
-                            } ?>
+                        <h5>Penilaian Mata Pelajaran
+                            <?= $kls->nama_kelas; ?>
                         </h5>
-						<span>Berikut data nilai-nilai siswa.</span>
-					</div>
+                        <span>Berikut data nilai-nilai mapel : <?php if ($mapel->id==$this->session->userdata('id_mapel')) {
+                                echo $mapel->nama_mapel;
+                            } ?></span>
+                    </div>
 				</div>
 			</div>
 			<div class="col-lg-4">
@@ -33,7 +33,7 @@
 							<a href="<?= site_url('guru/home') ?>"><i class="feather icon-home"></i></a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<?= site_url('guru/nilai') ?>">Nilai</a>
+							<a href="<?= site_url('guru/nilai/kelas/'.$kls->id) ?>">Nilai</a>
 						</li>
 					</ul>
 				</div>
@@ -51,7 +51,7 @@
                             <div class="card-header-right"> <ul class="list-unstyled card-option"> <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li> <li><i class="feather icon-maximize full-card"></i></li> <li><i class="feather icon-minus minimize-card"></i></li> <li><i class="feather icon-refresh-cw reload-card"></i></li> <li><i class="feather icon-trash close-card"></i></li> <li><i class="feather icon-chevron-left open-card-option"></i></li> </ul> </div>
 						</div>
 						<div style="position: absolute;right: 20px; top: 15px;">
-							<a href="<?= site_url('guru/nilai/cetak') ?>" class="btn btn-danger btn-round"><span class="fa fa-print"></span> Preview Cetak</a>	
+							<a href="<?= site_url('guru/nilai/cetak/'.$kl1) ?>" class="btn btn-danger btn-round"><span class="fa fa-print"></span> Preview Cetak</a>	
 						</div>
 						
 						<div class="card-block">
@@ -124,7 +124,7 @@
         },
         processing: true,
         serverSide: true,
-        ajax: {"url": "<?= base_url() ?>guru/nilai/json", "type": "POST"},
+        ajax: {"url": "<?= base_url() ?>guru/nilai/json/<?= $kl1 ?>", "type": "POST"},
         columns: [
         {
             "data": "id_nilai",
@@ -134,27 +134,7 @@
         {"data": "nama"},
         {"data": "nama_kelas",
             render: function(data) { 
-                if(data==='Kelas 1') {
-                  return '<label class="label label-lg label-inverse-danger" style="width:100%; text-align:center">'+data+'</label>'
-                }
-                else if(data==='Kelas 2') {
-                  return '<label class="label label-lg label-inverse-warning" style="width:100%; text-align:center">'+data+'</label>'
-                } 
-                else if(data==='Kelas 3') {
-                  return '<label class="label label-lg label-inverse-succes" style="width:100%; text-align:center">'+data+'</label>'
-                } 
-                else if(data==='Kelas 4') {
-                  return '<label class="label label-lg label-inverse-primary" style="width:100%; text-align:center">'+data+'</label>'
-                }
-                else if(data==='Kelas 5') {
-                  return '<label class="label label-lg label-inverse-info" style="width:100%; text-align:center">'+data+'</label>'
-                }
-                else if(data==='Kelas 6') {
-                  return '<label class="label label-lg label-inverse" style="width:100%; text-align:center">'+data+'</label>'
-                } else {
-                    return '<label class="label label-lg label-inverse-default" style="width:100%; text-align:center">'+data+'</label>'
-                }
-
+                return '<label class="label label-lg label-inverse-danger" style="width:100%; text-align:center">'+data+'</label>'
               },
               defaultContent: 'Tidak ada data'
             
@@ -298,7 +278,7 @@
 	                        <div class="col-md-6">
 	                        	<div class="form-group">
 		                            <label>NIS</label>
-		                            <input type="text" class="form-control" placeholder="NIS" name="nis" required maxlength="13" onkeypress='return check_int(event)'/>
+		                            <input type="text" class="form-control" placeholder="NIS" name="nis" required maxlength="13" onkeypress='return check_int(event)' readonly/>
 		                            <span class="help-block"></span>
 		                        </div>
                                 <div class="form-group">

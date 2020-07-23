@@ -30,8 +30,8 @@ class Guru extends CI_Controller {
 		$data['kelas'] = $this->DButama->GetDB('tb_kelas');
 		$data['mapel'] = $this->db->order_by('nama_mapel', 'asc');
 		$data['mapel'] = $this->DButama->GetDB('tb_mapel');
-		$title = array('title' => 'Data Guru', );
-		$this->load->view('guru/temp-header',$title);
+		$data['title'] = 'Data Guru';
+		$this->load->view('guru/temp-header',$data);
 		$this->load->view('guru/v_guru',$data);
 		$this->load->view('guru/temp-footer');
 	}

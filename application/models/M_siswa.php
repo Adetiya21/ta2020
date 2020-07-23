@@ -28,7 +28,7 @@ class M_siswa extends CI_Model {
 		return $this->datatables->generate();
 	}
 
-	public function json1() {
+	public function json1($id_kelas) {
 		$this->datatables->select('tb_siswa.nis,
 			tb_siswa.nama,
 			tb_siswa.tgl_lahir,
@@ -42,7 +42,7 @@ class M_siswa extends CI_Model {
 			');
 		$this->datatables->from($this->table);
 		$this->datatables->join('tb_kelas', 'tb_siswa.id_kelas=tb_kelas.id');
-		$this->datatables->where('id_kelas', $this->session->userdata('id_kelas'));
+		$this->datatables->where('id_kelas', $id_kelas);
 		$this->datatables->add_column('view', '<div align="center">
 			<a class="btn btn-primary btn-rounded btn-sm" href="javascript:void(0)" title="View" onclick="view($1)"> <span class="fa fa-eye"></span></a>
 			</div>', 'nis');

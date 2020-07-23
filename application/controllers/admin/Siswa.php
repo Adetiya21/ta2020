@@ -28,12 +28,7 @@ class Siswa extends CI_Controller {
 
 	public function index()
 	{
-		$data['kelas'] = $this->db->order_by('nama_kelas', 'asc');
-		$data['kelas'] = $this->DButama->GetDB('tb_kelas');
-		$data['title'] = 'Data Siswa';
-		$this->load->view('admin/temp-header',$data);
-		$this->load->view('admin/v_siswa',$data);
-		$this->load->view('admin/temp-footer');
+		redirect('admin/siswa/kelas/101','refresh');
 	}
 
 	public function kelas($id_kelas)

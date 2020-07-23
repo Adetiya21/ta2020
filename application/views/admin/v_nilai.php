@@ -272,7 +272,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>NIS</label>
-                                    <input type="text" class="form-control" placeholder="NIS" name="nis" required maxlength="13" onkeypress='return check_int(event)'/>
+                                    <input type="text" class="form-control" placeholder="NIS" name="nis" required maxlength="13" onkeypress='return check_int(event)' readonly/>
                                     <span class="help-block"></span>
                                 </div>
                                 <div class="form-group">

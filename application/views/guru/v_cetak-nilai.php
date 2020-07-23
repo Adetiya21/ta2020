@@ -17,8 +17,12 @@
                 <div class="page-header-title">
                     <i class="feather icon-layout bg-c-blue"></i>
                     <div class="d-inline">
-                        <h5>Cetak Nilai</h5>
-                        <span>Berikut data nilai siswa.</span>
+                        <h5>Cetak Nilai 
+                            <?= $kls->nama_kelas; ?>
+                        </h5>
+                        <span>Berikut data nilai siswa mapel : <?php if ($mapel->id==$this->session->userdata('id_mapel')) {
+                                echo $mapel->nama_mapel;
+                            } ?></span>
                     </div>
                 </div>
             </div>
@@ -29,10 +33,10 @@
                             <a href="<?= site_url('guru/home') ?>"><i class="feather icon-home"></i></a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="<?= site_url('guru/nilai') ?>">Nilai</a>
+                            <a href="<?= site_url('guru/nilai/kelas/'.$kls->id) ?>">Nilai</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="<?= site_url('guru/nilai/cetak') ?>">Cetak Nilai</a>
+                            <a href="<?= site_url('guru/nilai/cetak/'.$kls->id) ?>">Cetak Nilai</a>
                         </li>
                     </ul>
                 </div>
@@ -127,7 +131,7 @@
         },
         processing: true,
         serverSide: true,
-        ajax: {"url": "<?= base_url() ?>guru/nilai/json", "type": "POST"},
+        ajax: {"url": "<?= base_url() ?>guru/nilai/json/<?= $kl1 ?>", "type": "POST"},
         columns: [
         {
             "data": "id_nilai",

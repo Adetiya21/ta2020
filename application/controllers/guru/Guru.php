@@ -3,20 +3,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Guru extends CI_Controller {
 
+	// deklarasi var table
 	var $table = 'tb_guru';
 
 	public function __construct()
 	{
 		parent::__construct();
+		// cek session guru sudah login
 		if ($this->session->userdata('guru_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
 			echo 'window.location.assign("'.site_url("welcome").'")
 			</script>';
 		}
-		$this->load->model('m_guru','Model');
+		$this->load->model('m_guru','Model');  //load model
 	}
 
+	// fun json datatables
 	public function json() {
 		if ($this->input->is_ajax_request()) {
 			header('Content-Type: application/json');
@@ -24,6 +27,7 @@ class Guru extends CI_Controller {
 		}
 	}
 
+	// fun halman index
 	public function index()
 	{
 		$data['kelas'] = $this->db->order_by('nama_kelas', 'asc');
@@ -38,7 +42,7 @@ class Guru extends CI_Controller {
 		$this->load->view('guru/temp-footer');
 	}
 
-    //view
+    // fun view detail
 	public function view($nip)
 	{
 		if ($this->input->is_ajax_request()) {

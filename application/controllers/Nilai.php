@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Nilai extends CI_Controller {
 
+	// deklarasi var table
 	var $tableuser = 'tb_siswa';
 	var $tablenilai = 'tb_nilaisiswa';
 	var $tablekelas = 'tb_kelas';
@@ -11,6 +12,7 @@ class Nilai extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		// cek session siswa sudah login
 		if ($this->session->userdata('siswa_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
@@ -20,6 +22,7 @@ class Nilai extends CI_Controller {
 		$this->load->model('m_nilai','Model');
 	}
 
+	// fun json datatables
 	public function json() {
 		if ($this->input->is_ajax_request()) {
 			header('Content-Type: application/json');
@@ -27,6 +30,7 @@ class Nilai extends CI_Controller {
 		}
 	}
 
+	// fun halman index
 	public function index()
 	{
 		$cek = $this->DButama->GetDBWhere($this->tableuser,array('nis'=> $this->session->userdata('nis')));
@@ -41,6 +45,7 @@ class Nilai extends CI_Controller {
 		}
 	}
 
+	// fun halaman nilai_akhir
 	public function nilai_akhir()
 	{
 		$cek = $this->DButama->GetDBWhere($this->tableuser,array('nis'=> $this->session->userdata('nis')));

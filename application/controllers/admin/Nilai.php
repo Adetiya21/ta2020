@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Nilai extends CI_Controller {
 
+	// deklarasi var table
 	var $table = 'tb_nilaisiswa';
 	var $tablesiswa = 'tb_siswa';
 	var $tablekelas = 'tb_kelas';
@@ -10,18 +11,20 @@ class Nilai extends CI_Controller {
 	var $id_kelas= '';
 	var $id_mapel= '';
 
-	public function __construct()
+	function __construct()
 	{
 		parent::__construct();
+		// cek session admin sudah login
 		if ($this->session->userdata('admin_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
 			echo 'window.location.assign("'.site_url("admin/welcome").'")
 			</script>';
 		}
-		$this->load->model('m_nilai','Model');
+		$this->load->model('m_nilai','Model');  //load model
 	}
 
+	// fun json datatables
 	public function json($id_kelas="", $id_mapel="") {
 		if ($this->input->is_ajax_request()) {
 			header('Content-Type: application/json');
@@ -34,11 +37,12 @@ class Nilai extends CI_Controller {
 		redirect('admin/nilai/siswa/','refresh');
 	}
 
+	// fun halaman siswa sesuai kelas dan mapel
 	public function siswa($id_kelas="", $id_mapel="")
 	{
-		$cek = $this->DButama->GetDBWhere($this->tablekelas,array('id'=> $id_kelas));
+		$cek = $this->DButama->GetDBWhere($this->tablekelas,array('id'=> $id_kelas));  //cek data kelas
 		if ($cek->num_rows() == 1) {
-			$cek1 = $this->DButama->GetDBWhere($this->tablemapel,array('id'=> $id_mapel));
+			$cek1 = $this->DButama->GetDBWhere($this->tablemapel,array('id'=> $id_mapel));  //cek data mapel
 			if ($cek1->num_rows() == 1) {
 				$data['kl1'] = $id_kelas;
 				$data['mp1'] = $id_mapel;
@@ -60,11 +64,12 @@ class Nilai extends CI_Controller {
 		}
 	}
 
+	// fun halaman cetak siswa sesuai kelas dan mapel
 	public function cetak($id_kelas="", $id_mapel="")
 	{
-		$cek = $this->DButama->GetDBWhere($this->tablekelas,array('id'=> $id_kelas));
+		$cek = $this->DButama->GetDBWhere($this->tablekelas,array('id'=> $id_kelas));  //cek data kelas
 		if ($cek->num_rows() == 1) {
-			$cek1 = $this->DButama->GetDBWhere($this->tablemapel,array('id'=> $id_mapel));
+			$cek1 = $this->DButama->GetDBWhere($this->tablemapel,array('id'=> $id_mapel));  //cek data mapel
 			if ($cek1->num_rows() == 1) {
 				$data['kl1'] = $id_kelas;
 				$data['mp1'] = $id_mapel;
@@ -86,7 +91,7 @@ class Nilai extends CI_Controller {
 		}
 	}
 	
-	//edit
+	// fun edit
 	public function edit($id)
 	{
 		if ($this->input->is_ajax_request()) {
@@ -102,7 +107,7 @@ class Nilai extends CI_Controller {
 		}
 	}
 
-	//proses update
+	// proses update
 	public function update()
 	{
 		if ($this->input->is_ajax_request()) {
@@ -110,16 +115,16 @@ class Nilai extends CI_Controller {
 			$query = $this->DButama->GetDBWhere($this->table,$where);
 			$row = $query->row();
 			$data = array(
-					'h1' => $this->input->post('h1'),
-					'h2' => $this->input->post('h2'),
-					'h3' => $this->input->post('h3'),
-					'uts' => $this->input->post('uts'),
-					'uas' => $this->input->post('uas'),
-					'total' => $this->input->post('total'),
-					'rata' => $this->input->post('rata')
-				);
-				$this->DButama->UpdateDB($this->table,$where,$data);
-				echo json_encode(array("status" => TRUE));
+				'h1' => $this->input->post('h1'),
+				'h2' => $this->input->post('h2'),
+				'h3' => $this->input->post('h3'),
+				'uts' => $this->input->post('uts'),
+				'uas' => $this->input->post('uas'),
+				'total' => $this->input->post('total'),
+				'rata' => $this->input->post('rata')
+			);
+			$this->DButama->UpdateDB($this->table,$where,$data);
+			echo json_encode(array("status" => TRUE));
 		}
 
 	}

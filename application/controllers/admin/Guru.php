@@ -3,20 +3,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Guru extends CI_Controller {
 
+	// deklarasi var table
 	var $table = 'tb_guru';
 
-	public function __construct()
+	function __construct()
 	{
 		parent::__construct();
+		// cek session admin sudah login
 		if ($this->session->userdata('admin_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
 			echo 'window.location.assign("'.site_url("admin/welcome").'")
 			</script>';
 		}
-		$this->load->model('m_guru','Model');
+		$this->load->model('m_guru','Model');  //load model
 	}
 
+	// fun json datatables
 	public function json() {
 		if ($this->input->is_ajax_request()) {
 			header('Content-Type: application/json');
@@ -24,6 +27,7 @@ class Guru extends CI_Controller {
 		}
 	}
 
+	// fun halaman index
 	public function index()
 	{
 		$data['mapel'] = $this->db->order_by('nama_mapel', 'asc');
@@ -36,18 +40,23 @@ class Guru extends CI_Controller {
 		$this->load->view('admin/temp-footer');
 	}
 
-	//hapus
+	// fun hapus
 	public function hapus($nip)
 	{
 		if ($this->input->is_ajax_request()) {
-			$where = array('nip' => $nip);
-			$this->DButama->GetDBWhere($this->table,$where)->row();
-			$this->DButama->DeleteDB($this->table,$where);
+			$where = array('nip' => $nip);  //filter berdasarkan nip
+			$this->DButama->GetDBWhere($this->table,$where)->row();  //load database
+			$tes = $this->DButama->GetDBWhere($this->table,$where)->row();  //load database
+			$query = $this->DButama->DeleteDB($this->table,$where);  //fun delete
 			echo json_encode(array("status" => TRUE));
+			// hapus gambar di folder
+			if($tes->gambar!==null){
+                unlink("assets/images/guru/".$tes->gambar);
+            }
 		}
 	}
 
-    //input
+    // fun tambah
 	public function tambah()
 	{
 		if ($this->input->is_ajax_request()) {
@@ -61,7 +70,7 @@ class Guru extends CI_Controller {
 				exit();
 			}else{
 				$pass=$this->input->post('password');
-				$hash=password_hash($pass, PASSWORD_DEFAULT);
+				$hash=password_hash($pass, PASSWORD_DEFAULT);  //membuat encrypt password
 				$data = array(
 					'nip' => $this->input->post('nip'),
 					'id_mapel' => $this->input->post('id_mapel'),
@@ -79,13 +88,14 @@ class Guru extends CI_Controller {
 					$upload = $this->_do_upload();
 					$data['gambar'] = $upload;
 				}
+				// fun tambah
 				$this->DButama->AddDB($this->table,$data);
 				echo json_encode(array("status" => TRUE));
 			}
 		}
 	}
 
-    //edit
+    // fun edit
 	public function edit($nip)
 	{
 		if ($this->input->is_ajax_request()) {
@@ -95,7 +105,7 @@ class Guru extends CI_Controller {
 		}
 	}
 	
-	//proses update
+	// proses update
 	public function update()
 	{
 		if ($this->input->is_ajax_request()) {
@@ -103,7 +113,7 @@ class Guru extends CI_Controller {
 			$query = $this->DButama->GetDBWhere($this->table,$where);
 			$row = $query->row();
 			$pass=$this->input->post('password');
-			$hash=password_hash($pass, PASSWORD_DEFAULT);
+			$hash=password_hash($pass, PASSWORD_DEFAULT);  //membuat encrypt password
 			
 			// jika password tidak di ganti
 			if ($row->password == $this->input->post('password')) {
@@ -115,6 +125,7 @@ class Guru extends CI_Controller {
 					'no_telp' => $this->input->post('no_telp'),
 					'alamat' => $this->input->post('alamat'),
 				);
+
 				// hapus gambar
 				if($this->input->post('remove_photo')) 
 				{
@@ -133,6 +144,7 @@ class Guru extends CI_Controller {
 						unlink('assets/images/guru/'.$row_cek->gambar);
 					$data['gambar'] = $upload;
 				}
+
 				// fun update
 				$this->DButama->UpdateDB($this->table,$where,$data);
 				echo json_encode(array("status" => TRUE));
@@ -149,6 +161,7 @@ class Guru extends CI_Controller {
 					'alamat' => $this->input->post('alamat'),
 					'password' => $hash
 				);
+
 				// hapus gambar
 				if($this->input->post('remove_photo')) 
 				{
@@ -167,6 +180,7 @@ class Guru extends CI_Controller {
 						unlink('assets/images/guru/'.$row_cek->gambar);
 					$data['gambar'] = $upload;
 				}
+
 				// fun update
 				$this->DButama->UpdateDB($this->table,$where,$data);
 				echo json_encode(array("status" => TRUE));

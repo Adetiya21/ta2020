@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Siswa extends CI_Controller {
 
+	// deklarasi var table
 	var $table = 'tb_siswa';
 	var $tablenilai = 'tb_nilaisiswa';
 	var $tablekelas = 'tb_kelas';
@@ -10,15 +11,17 @@ class Siswa extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		// cek session guru sudah login
 		if ($this->session->userdata('guru_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
 			echo 'window.location.assign("'.site_url("welcome").'")
 			</script>';
 		}
-		$this->load->model('m_siswa','Model');
+		$this->load->model('m_siswa','Model');  //load model
 	}
 
+	// fun json datatables
 	public function json($id_kelas) {
 		if ($this->input->is_ajax_request()) {
 			header('Content-Type: application/json');
@@ -31,6 +34,7 @@ class Siswa extends CI_Controller {
 		redirect('guru/siswa/kelas/101','refresh');
 	}
 
+	// fun halaman siswa per kelas
 	public function kelas($id_kelas)
 	{
 		$cek = $this->DButama->GetDBWhere($this->tablekelas,array('id'=> $id_kelas));
@@ -52,7 +56,7 @@ class Siswa extends CI_Controller {
 		}
 	}
 
-    //view
+    // fun view detail
 	public function view($nis)
 	{
 		if ($this->input->is_ajax_request()) {

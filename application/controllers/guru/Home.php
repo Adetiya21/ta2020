@@ -3,11 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends CI_Controller {
 
+	// deklarasi var table
 	var $table = 'tb_guru';
 
 	function __construct()
 	{
 		parent::__construct();
+		// cek session guru sudah login
 		if ($this->session->userdata('guru_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
@@ -16,6 +18,7 @@ class Home extends CI_Controller {
 		}
 	}
 
+	// fun halaman index
 	public function index()
 	{
 		$data['title'] = 'Dashboard';
@@ -101,6 +104,7 @@ class Home extends CI_Controller {
 		$this->load->view('guru/temp-footer');
 	}
 
+	// fun halaman profil
 	public function profil($nip)
 	{
 		$cek = $this->DButama->GetDBWhere($this->table,array('nip'=> $nip));
@@ -121,6 +125,7 @@ class Home extends CI_Controller {
 		}
 	}
 
+	// proses edit profil
 	function edit_profil()
 	{
 		$this->load->library('form_validation');
@@ -141,6 +146,7 @@ class Home extends CI_Controller {
 			$row = $query->row();
 			$pass=$this->input->post('password');
 			$hash=password_hash($pass, PASSWORD_DEFAULT);
+			
 			// jika password tidak di ganti
 			if ($row->password == $this->input->post('password')) {
 				$data = array(
@@ -151,6 +157,7 @@ class Home extends CI_Controller {
 					'no_telp' => $this->input->post('no_telp'),
 					'alamat' => $this->input->post('alamat'),
 				);
+				
 				// hapus gambar
 				if($this->input->post('remove_photo')) 
 				{
@@ -169,6 +176,7 @@ class Home extends CI_Controller {
 						unlink('assets/images/guru/'.$row_cek->gambar);
 					$data['gambar'] = $upload;
 				}
+				
 				// fun update
 				$sess_data['nama'] = $this->input->post('nama');
 				$this->session->set_userdata($sess_data);
@@ -190,6 +198,7 @@ class Home extends CI_Controller {
 					'alamat' => $this->input->post('alamat'),
 					'password' => $hash
 				);
+				
 				// hapus gambar
 				if($this->input->post('remove_photo')) 
 				{
@@ -208,6 +217,7 @@ class Home extends CI_Controller {
 						unlink('assets/images/guru/'.$row_cek->gambar);
 					$data['gambar'] = $upload;
 				}
+				
 				// fun update
 				$sess_data['nama'] = $this->input->post('nama');
 				$this->session->set_userdata($sess_data);

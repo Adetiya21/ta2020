@@ -41,8 +41,9 @@
 			<nav class="navbar header-navbar pcoded-header">
 				<div class="navbar-wrapper">
 					<div class="navbar-logo">
-						<a href="<?= site_url('home') ?>">
-							<img class="img-fluid" src="<?= base_url('assets/') ?>assets/images/logo.png" alt="Theme-Logo" />
+						<a href="<?= site_url('home') ?>" class="ml-1">
+							<!-- <img class="img-fluid" src="<?= base_url('assets/') ?>assets/images/logo.png" alt="Theme-Logo" /> -->
+							<h5>SD 04 Sungai Pinyuh</h5>
 						</a>
 						<a class="mobile-menu" id="mobile-collapse" href="#!">
 							<i class="feather icon-menu icon-toggle-right"></i>

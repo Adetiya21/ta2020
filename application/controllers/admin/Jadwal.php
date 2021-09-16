@@ -3,21 +3,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Jadwal extends CI_Controller {
 
+	// deklarasi var table
 	var $table = 'tb_jadwal';
 	var $tablekelas = 'tb_kelas';
 
 	function __construct()
 	{
 		parent::__construct();
+		// cek session admin sudah login
 		if ($this->session->userdata('admin_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
 			echo 'window.location.assign("'.site_url("admin/welcome").'")
 			</script>';
 		}
-		$this->load->model('m_jadwal','Model');
+		$this->load->model('m_jadwal','Model');  //load model
 	}
 
+	// fun json datatables
 	public function json($id_kelas) {
 		if ($this->input->is_ajax_request()) {
 			header('Content-Type: application/json');
@@ -30,6 +33,7 @@ class Jadwal extends CI_Controller {
 		redirect('admin/jadwal/kelas/101','refresh');
 	}
 
+	// fun halaman kelas
 	public function kelas($id_kelas)
 	{
 		$cek = $this->DButama->GetDBWhere($this->tablekelas,array('id'=> $id_kelas));
@@ -50,7 +54,7 @@ class Jadwal extends CI_Controller {
 		}
 	}
 
-	//hapus
+	// fun hapus
 	public function hapus($id)
 	{
 		if ($this->input->is_ajax_request()) {
@@ -61,7 +65,7 @@ class Jadwal extends CI_Controller {
 		}
 	}
 
-    //input
+    // fun tambah
 	public function tambah()
 	{
 		if ($this->input->is_ajax_request()) {
@@ -77,7 +81,7 @@ class Jadwal extends CI_Controller {
 		}
 	}
 
-    //edit
+    // fun edit
 	public function edit($id)
 	{
 		if ($this->input->is_ajax_request()) {
@@ -87,7 +91,7 @@ class Jadwal extends CI_Controller {
 		}
 	}
 	
-	//proses update
+	// proses update
 	public function update()
 	{
 		if ($this->input->is_ajax_request()) {
@@ -95,14 +99,14 @@ class Jadwal extends CI_Controller {
 			$query = $this->DButama->GetDBWhere($this->table,$where);
 			$row = $query->row();
 			$data = array(
-					'nip_guru' => $this->input->post('nip_guru'),
-					'id_kelas' => $this->input->post('id_kelas'),
-					'hari' => $this->input->post('hari'),
-					'jam_masuk' => $this->input->post('jam_masuk'),
-					'jam_selesai' => $this->input->post('jam_selesai'),
-				);
-				$this->DButama->UpdateDB($this->table,$where,$data);
-				echo json_encode(array("status" => TRUE));
+				'nip_guru' => $this->input->post('nip_guru'),
+				'id_kelas' => $this->input->post('id_kelas'),
+				'hari' => $this->input->post('hari'),
+				'jam_masuk' => $this->input->post('jam_masuk'),
+				'jam_selesai' => $this->input->post('jam_selesai'),
+			);
+			$this->DButama->UpdateDB($this->table,$where,$data);
+			echo json_encode(array("status" => TRUE));
 		}
 	}
 

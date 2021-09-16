@@ -3,20 +3,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Mapel extends CI_Controller {
 
+	// deklarasi var table
 	var $table = 'tb_mapel';
 
 	function __construct()
 	{
 		parent::__construct();
+		// cek session admin sudah login
 		if ($this->session->userdata('admin_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
 			echo 'window.location.assign("'.site_url("admin/welcome").'")
 			</script>';
 		}
-		$this->load->model('m_mapel','Model');
+		$this->load->model('m_mapel','Model');  //load model
 	}
 
+	// fun json datatables
 	public function json() {
 		if ($this->input->is_ajax_request()) {
 			header('Content-Type: application/json');
@@ -24,6 +27,7 @@ class Mapel extends CI_Controller {
 		}
 	}
 
+	// fun halaman index
 	public function index()
 	{
 		$data['kelas'] = $this->db->order_by('nama_kelas', 'asc');
@@ -36,7 +40,7 @@ class Mapel extends CI_Controller {
 		$this->load->view('admin/temp-footer');
 	}
 
-	//input
+	// fun tambah
 	public function tambah()
 	{
 		if ($this->input->is_ajax_request()) {
@@ -59,7 +63,7 @@ class Mapel extends CI_Controller {
 		}
 	}
 
-	//hapus
+	// fun hapus
 	public function hapus($id)
 	{
 		if ($this->input->is_ajax_request()) {
@@ -71,7 +75,7 @@ class Mapel extends CI_Controller {
 
 	}
 
-	//edit
+	// fun edit
 	public function edit($id)
 	{
 		if ($this->input->is_ajax_request()) {
@@ -81,7 +85,7 @@ class Mapel extends CI_Controller {
 		}
 	}
 
-	//proses update
+	// proses update
 	public function update()
 	{
 		if ($this->input->is_ajax_request()) {

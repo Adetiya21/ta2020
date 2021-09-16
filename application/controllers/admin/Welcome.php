@@ -9,11 +9,13 @@ class Welcome extends CI_Controller {
 		
 	}
 
+	// fun halaman login
 	public function index()
 	{
 		$this->load->view('admin/v_login');
 	}
 
+	// proses login
 	public function login()
 	{
 		$recaptcha = $this->input->post('g-recaptcha-response');
@@ -70,6 +72,7 @@ class Welcome extends CI_Controller {
 		}
 	}
 
+	// fun logout
 	function logout()
 	{
 		$user_data = $this->session->all_userdata();

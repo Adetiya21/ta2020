@@ -3,11 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends CI_Controller {
 
+	// deklarasi var table
 	var $table = 'tb_siswa';
 
 	public function __construct()
 	{
 		parent::__construct();
+		// cek session siswa sudah login
 		if ($this->session->userdata('siswa_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
@@ -16,7 +18,7 @@ class Home extends CI_Controller {
 		}
 	}
 	
-
+	// fun halaman index
 	public function index()
 	{
 		$cek = $this->DButama->GetDBWhere($this->table,array('nis'=> $this->session->userdata('nis')));
@@ -45,6 +47,7 @@ class Home extends CI_Controller {
 
 	}
 
+	// fun halam profil
 	public function profil($nis)
 	{
 		$cek = $this->DButama->GetDBWhere($this->table,array('nis'=> $nis));
@@ -61,6 +64,7 @@ class Home extends CI_Controller {
 		}
 	}
 
+	// proses edit profil
 	function edit_profil()
 	{
 		$this->load->library('form_validation');
@@ -83,6 +87,7 @@ class Home extends CI_Controller {
 	        $tgl_lahir = date('Y-m-d', strtotime($tgl_lahir));        
 			$pass=$this->input->post('password');
 			$hash=password_hash($pass, PASSWORD_DEFAULT);
+
 			// jika password tidak di ganti
 			if ($row->password == $this->input->post('password')) {
 				$data = array(
@@ -129,23 +134,6 @@ class Home extends CI_Controller {
 		
 		}
 	}
-
-	private function _do_upload()
-	{
-		$config['upload_path']   = 'assets/assets/img/ktp/';
-		$config['allowed_types'] = 'jpg|png|jpeg';
-		$config['remove_spaces'] = TRUE;
-		$config['encrypt_name']  = TRUE;
-        $config['file_name']     = round(microtime(true) * 1000); //just milisecond timestamp fot unique name
-        $this->load->library('upload', $config);
-
-        if(!$this->upload->do_upload('foto_ktp')) //upload and validate
-        {
-        	$this->session->set_flashdata('upload_error', 'Upload error: '.$this->upload->display_errors('',''));
-        	// redirect('/home/profil/'.$this->session->userdata('id').'','refresh');
-        }
-        return $this->upload->data('file_name');
-    }
 }
 
 /* End of file Home.php */

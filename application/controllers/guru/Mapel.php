@@ -3,20 +3,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Mapel extends CI_Controller {
 
+	// deklarasi var table
 	var $table = 'tb_mapel';
 
 	function __construct()
 	{
 		parent::__construct();
+		// cek session guru sudah login
 		if ($this->session->userdata('guru_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
 			echo 'window.location.assign("'.site_url("guru/welcome").'")
 			</script>';
 		}
-		$this->load->model('m_mapel','Model');
+		$this->load->model('m_mapel','Model');  //load model
 	}
 
+	// fun json datatables
 	public function json() {
 		if ($this->input->is_ajax_request()) {
 			header('Content-Type: application/json');
@@ -24,6 +27,7 @@ class Mapel extends CI_Controller {
 		}
 	}
 
+	// fun halaman index
 	public function index()
 	{
 		$data['title'] = 'Data Mata Pelajaran' ;

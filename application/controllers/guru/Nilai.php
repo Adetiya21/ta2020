@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Nilai extends CI_Controller {
 
+	// deklarasi var table
 	var $table = 'tb_nilaisiswa';
 	var $tablesiswa = 'tb_siswa';
 	var $tablekelas = 'tb_kelas';
@@ -11,15 +12,17 @@ class Nilai extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		// cek session guru sudah login
 		if ($this->session->userdata('guru_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
 			echo 'window.location.assign("'.site_url("welcome").'")
 			</script>';
 		}
-		$this->load->model('m_nilai','Model');
+		$this->load->model('m_nilai','Model');  //load model
 	}
 
+	// fun json datatables
 	public function json($id_kelas) {
 		if ($this->input->is_ajax_request()) {
 			header('Content-Type: application/json');
@@ -32,6 +35,7 @@ class Nilai extends CI_Controller {
 		redirect('guru/nilai/kelas/101','refresh');
 	}
 
+	// fun halaman nilai per kelas
 	public function kelas($id_kelas)
 	{
 		$cek = $this->DButama->GetDBWhere($this->tablekelas,array('id'=> $id_kelas));
@@ -56,6 +60,7 @@ class Nilai extends CI_Controller {
 		}
 	}
 
+	// fun halaman cetak nilai per kelas
 	public function cetak($id_kelas)
 	{
 		$cek = $this->DButama->GetDBWhere($this->tablekelas,array('id'=> $id_kelas));
@@ -81,7 +86,7 @@ class Nilai extends CI_Controller {
 		}
 	}
 
-	//edit
+	// fun edit
 	public function edit($id)
 	{
 		if ($this->input->is_ajax_request()) {
@@ -97,7 +102,7 @@ class Nilai extends CI_Controller {
 		}
 	}
 
-	//proses update
+	// proses update
 	public function update()
 	{
 		if ($this->input->is_ajax_request()) {
@@ -105,16 +110,16 @@ class Nilai extends CI_Controller {
 			$query = $this->DButama->GetDBWhere($this->table,$where);
 			$row = $query->row();
 			$data = array(
-					'h1' => $this->input->post('h1'),
-					'h2' => $this->input->post('h2'),
-					'h3' => $this->input->post('h3'),
-					'uts' => $this->input->post('uts'),
-					'uas' => $this->input->post('uas'),
-					'total' => $this->input->post('total'),
-					'rata' => $this->input->post('rata')
-				);
-				$this->DButama->UpdateDB($this->table,$where,$data);
-				echo json_encode(array("status" => TRUE));
+				'h1' => $this->input->post('h1'),
+				'h2' => $this->input->post('h2'),
+				'h3' => $this->input->post('h3'),
+				'uts' => $this->input->post('uts'),
+				'uas' => $this->input->post('uas'),
+				'total' => $this->input->post('total'),
+				'rata' => $this->input->post('rata')
+			);
+			$this->DButama->UpdateDB($this->table,$where,$data);
+			echo json_encode(array("status" => TRUE));
 		}
 	}
 

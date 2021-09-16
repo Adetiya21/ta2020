@@ -3,11 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Jadwal extends CI_Controller {
 
+	// deklarasi var table
 	var $table = 'tb_jadwal';
 
 	public function __construct()
 	{
 		parent::__construct();
+		// cek session siswa sudah login
 		if ($this->session->userdata('siswa_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
@@ -17,6 +19,7 @@ class Jadwal extends CI_Controller {
 		$this->load->model('m_jadwal','Model');
 	}
 
+	// fun json datatables
 	public function json() {
 		if ($this->input->is_ajax_request()) {
 			header('Content-Type: application/json');
@@ -24,6 +27,7 @@ class Jadwal extends CI_Controller {
 		}
 	}
 
+	// fun halaman index
 	public function index()
 	{
 		$query = $this->DButama->GetDBWhere('tb_kelas', array('id' => $this->session->userdata('id_kelas'), ));

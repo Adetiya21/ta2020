@@ -3,20 +3,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends CI_Controller {
 
+	// deklarasi var table
 	var $table = 'tb_admin';
 
 	function __construct()
 	{
 		parent::__construct();
+		// cek session admin sudah login
 		if ($this->session->userdata('admin_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
 			echo 'window.location.assign("'.site_url("admin/welcome").'")
 			</script>';
-			// redirect('admin/welcome');
 		}
 	}
 
+	// fun halaman index
 	public function index()
 	{
 		$title = array('title' => 'Dashboard', );
@@ -35,6 +37,7 @@ class Home extends CI_Controller {
 		$this->load->view('admin/temp-footer');
 	}
 
+	// fun halaman profil
 	public function profil($id)
 	{
 		$cek = $this->DButama->GetDBWhere($this->table,array('id'=> $id));
@@ -53,6 +56,7 @@ class Home extends CI_Controller {
 		}
 	}
 
+	// proses update profil
 	function edit_profil()
 	{
 		$this->load->library('form_validation');

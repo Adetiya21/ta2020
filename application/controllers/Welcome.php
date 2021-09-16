@@ -3,24 +3,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
-	var $table = 'tb_siswa';
-
 	function __construct()
 	{
 		parent::__construct(); 
 	}
 
 	public function get_tokens($value="") {
-		if ($this->session->userdata('bayand') == "SudahMasukMas") {
+		if ($this->session->userdata('sd') == "SudahMasukMas") {
 			echo $this->security->get_csrf_hash();
 		}
 	}
 
+	// fun halaman login
 	public function index()
 	{
 		$this->load->view('v_login');
 	}
 
+	// proses login
 	public function login()
 	{
 		$recaptcha = $this->input->post('g-recaptcha-response');
@@ -32,6 +32,7 @@ class Welcome extends CI_Controller {
 				</div>');
 			redirect('welcome','refresh');
 		} else {
+			// validasi
 			$this->load->library('form_validation');
 			$config = array(
 				array('field' => 'nis/nip','label' => "NIS/NIP",'rules' => 'required' ),
@@ -47,8 +48,8 @@ class Welcome extends CI_Controller {
 			}else{
 
 				// load database dengan nis/nip
-				$query = $this->DButama->GetDBWhere('tb_siswa', array('nis' => $this->input->post('nis/nip'), ));
-				$query_guru = $this->DButama->GetDBWhere('tb_guru',  array('nip' => $this->input->post('nis/nip')));
+				$query = $this->DButama->GetDBWhere('tb_siswa', array('nis' => $this->input->post('nis/nip'), ));  //tabel siswa
+				$query_guru = $this->DButama->GetDBWhere('tb_guru',  array('nip' => $this->input->post('nis/nip')));  //tabel guru
 				
 				if ($query->num_rows() == 0 && $query_guru->num_rows() == 0) {
 					$this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible" role="alert">
@@ -56,7 +57,8 @@ class Welcome extends CI_Controller {
 						<strong>NIS/NIP/Password Tidak Ada</strong> 
 						</div>');
 					redirect('welcome','refresh');
-				} //login siswa
+				} 
+				//login siswa
 				else if ($query->num_rows() == 1 ) {
 					$hasil = $query->row();
 					if (password_verify($this->input->post('password'), $hasil->password)) {
@@ -77,7 +79,8 @@ class Welcome extends CI_Controller {
 							</div>');
 						redirect('welcome','refresh');
 					}
-				} //login guru
+				} 
+				//login guru
 				else if ($query_guru->num_rows() == 1 ) {
 					$hasil_guru = $query_guru->row();
 					if (password_verify($this->input->post('password'), $hasil_guru->password)) {
@@ -105,6 +108,7 @@ class Welcome extends CI_Controller {
 		}
 	}
 
+	// fun logout
 	function logout()
 	{
 		$user_data = $this->session->all_userdata();

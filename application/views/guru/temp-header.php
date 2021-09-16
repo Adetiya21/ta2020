@@ -194,7 +194,8 @@
 										</ul>
 									</li>
 								</ul><hr>
-								<div class="pcoded-navigation-label" style="position:absolute;bottom: 0;left: 20%; text-align: center;">Copyright© 2021<br>Allrights Reserved.</div>
+								<br><br><br>
+								<div class="pcoded-navigation-label" style=" text-align: center;">Copyright© 2021<br>Allrights Reserved.</div>
 
 							</div>
 						</nav>

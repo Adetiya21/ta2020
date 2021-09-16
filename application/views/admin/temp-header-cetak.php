@@ -198,8 +198,9 @@
 										</ul>
 									</li>
 
-								</ul><hr><br><br>
-								<div class="pcoded-navigation-label" style="text-align: center;">Copyright© 2020<br>Allrights Reserved.</div>
+								</ul><hr>
+								<br><br><br>
+								<div class="pcoded-navigation-label" style="text-align: center;">Copyright© 2021<br>Allrights Reserved.</div>
 
 							</div>
 						</nav>

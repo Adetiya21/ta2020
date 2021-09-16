@@ -157,7 +157,7 @@
             var length = info.iLength;
             var index = page * length + (iDisplayIndex + 1);
             $('td:eq(0)', row).html(index);
-        }
+        },
     });
 
     //fun reload

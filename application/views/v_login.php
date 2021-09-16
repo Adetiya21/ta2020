@@ -16,7 +16,7 @@ if ($this->session->userdata('dftr_logged_in') == 'Sudah_Loggin'){
     <link rel="icon" href="<?= base_url('assets/') ?>assets/images/favicon.ico" type="image/x-icon">
     <link href="<?= base_url('assets/') ?>fonts.googleapis.com/css0f7c.css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <link href="<?= base_url('assets/') ?>fonts.googleapis.com/css1180.css?family=Quicksand:500,700" rel="stylesheet">
-    <title>Login Siswa</title>
+    <title>Login Siswa / Guru</title>
     <!-- Custom CSS -->
     <link href="<?= base_url('assets/')?>dist/css/style.css" rel="stylesheet">
     <?=  $this->recaptcha->getScriptTag(); ?>
@@ -40,17 +40,17 @@ if ($this->session->userdata('dftr_logged_in') == 'Sudah_Loggin'){
                         <div class="text-center">
                             <img src="<?= base_url('assets/')?>assets/images/big/icon.png" alt="wrapkit">
                         </div>
-                        <h2 class="mt-3 text-center">LOGIN SISWA</h2>
-                        <p class="text-center">Login untuk dapat masuk kehalaman siswa</p>
+                        <h2 class="mt-3 text-center">LOGIN SISWA / GURU</h2>
+                        <p class="text-center">Login untuk dapat masuk kehalaman dashboard</p>
                         <?= $this->session->flashdata('pesan'); ?>
                         <?= $this->session->flashdata('error'); ?>
                         <?= form_open('welcome/login'); ?>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="text-dark" for="uname">NIS</label>
-                                        <input class="form-control" id="uname" type="text" name="nis" 
-                                            placeholder="Masukkan NIS" value="<?= $this->session->flashdata('nis'); ?>">
+                                        <label class="text-dark" for="uname">NIS/NIP</label>
+                                        <input class="form-control" id="uname" type="text" name="nis/nip" 
+                                            placeholder="Masukkan NIS/NIP" value="<?= $this->session->flashdata('nis'); ?>">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">

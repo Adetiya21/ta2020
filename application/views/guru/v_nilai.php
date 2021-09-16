@@ -2,6 +2,7 @@
 <script>
     $(document).ready(function() {
       $('.nilai').addClass('active');
+      $('.nilai-<?= $kls->id ?>').addClass('active');
   	});
 
     function check_int(evt) {

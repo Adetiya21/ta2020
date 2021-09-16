@@ -1,18 +1,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-      $('.mapel').addClass('active');
+      $('.jadwal').addClass('active');
+      $('.jadwal-<?= $kls ?>').addClass('active');
   	});
-
 
     function check_int(evt) {
       var charCode = ( evt.which ) ? evt.which : event.keyCode;
       return ( charCode >= 48 && charCode <= 57 || charCode == 8 );
-    }
-
-    function myFunction() {
-        var x = document.getElementById("id_mapel");
-        x.value = x.value.toUpperCase();
     }
 </script>
 
@@ -23,8 +18,14 @@
 				<div class="page-header-title">
 					<i class="feather icon-layout bg-c-blue"></i>
 					<div class="d-inline">
-						<h5>Mata Pelajaran</h5>
-						<span>Berikut data mapel.</span>
+						<h5>Jadwal Guru
+                            <?php foreach ($kelas->result() as $key) {
+                                if ($key->id==$kls) {
+                                    echo $key->nama_kelas;
+                                }
+                            } ?>
+                        </h5>
+						<span>Berikut data jadwal guru.</span>
 					</div>
 				</div>
 			</div>
@@ -35,7 +36,7 @@
 							<a href="<?= site_url('admin/home') ?>"><i class="feather icon-home"></i></a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<?= site_url('admin/mapel') ?>">Mata Pelajaran</a>
+							<a href="<?= site_url('admin/jadwal') ?>">Jadwal Guru</a>
 						</li>
 					</ul>
 				</div>
@@ -49,7 +50,7 @@
 				<div class="page-body">
 					<div class="card">
 						<div class="card-header">
-							<h5>Data Mata Pelajaran</h5>
+							<h5>Data Jadwal Guru</h5>
                             <div class="card-header-right"> <ul class="list-unstyled card-option"> <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li> <li><i class="feather icon-maximize full-card"></i></li> <li><i class="feather icon-minus minimize-card"></i></li> <li><i class="feather icon-refresh-cw reload-card"></i></li> <li><i class="feather icon-trash close-card"></i></li> <li><i class="feather icon-chevron-left open-card-option"></i></li> </ul> </div>
 						</div>
 						<div style="position: absolute;right: 20px; top: 15px;">
@@ -61,8 +62,11 @@
 								<table id="compact" class="table table-bordered table-hover nowrap" width="100%">
 									<thead>
 										<tr><th width="1%">No</th>
-										<th>Kode mapel</th>
-										<th>Nama mapel</th>
+										<th>Nama Guru</th>
+										<th>Kelas</th>
+                                        <th>Mata Pelajaran</th>
+                                        <th>Hari</th>
+                                        <th>Jam</th>
 										<th width="10%">Action</th>
 										</tr>
 									</thead>
@@ -117,17 +121,20 @@
         },
         processing: true,
         serverSide: true,
-        ajax: {"url": "<?= base_url() ?>admin/mapel/json", "type": "POST"},
+        ajax: {"url": "<?= base_url() ?>admin/jadwal/json/<?= $kls ?>", "type": "POST"},
         columns: [
         {
             "data": "id",
             "orderable": false
         },
-        {"data": "id"},
+        {"data": "nama"},
+        {"data": "nama_kelas"},
         {"data": "nama_mapel"},
+        {"data": "hari"},
+        {"data": "jam"},
         {"data": "view","orderable": false}
         ],
-        order: [[1, 'asc']],
+        order: [[4, 'asc']],
         rowCallback: function(row, data, iDisplayIndex) {
             var info = this.fnPagingInfo();
             var page = info.iPage;
@@ -150,7 +157,7 @@
         {
             // ajax delete data to database
             $.ajax({
-                url : '<?php echo site_url("admin/mapel/hapus/'+id+'") ?>',
+                url : '<?php echo site_url("admin/jadwal/hapus/'+id+'") ?>',
                 type: "POST",
                 dataType: "JSON",
                 data: { <?= $this->security->get_csrf_token_name(); ?> : function () {
@@ -179,7 +186,7 @@
         $('.form-group').removeClass('has-error'); // clear error class
         $('.help-block').empty(); // clear error string
         $('#modal_form').modal('show'); // show bootstrap modal
-        $('.modal-title').text('Tambah mapel'); // Set Title to Bootstrap modal title
+        $('.modal-title').text('Tambah Jadwal Guru'); // Set Title to Bootstrap modal title
     }
 
     //fun edit
@@ -190,15 +197,19 @@
 	    $('.form-group').removeClass('has-error'); // clear error class
 	    $('.help-block').empty(); // clear error string
 	    $.ajax({
-	        url : '<?php echo site_url("admin/mapel/edit/'+id+'") ?>',
+	        url : '<?php echo site_url("admin/jadwal/edit/'+id+'") ?>',
 	        type: "GET",
 	        dataType: "JSON",
 	        success: function(data)
 	        {
 	            $('[name="id"]').val(data.id);
-	            $('[name="nama_mapel"]').val(data.nama_mapel);
+	            $('[name="nip_guru"]').val(data.nip_guru);
+                $('[name="id_kelas"]').val(data.id_kelas);
+                $('[name="hari"]').val(data.hari);
+                $('[name="jam_masuk"]').val(data.jam_masuk);
+                $('[name="jam_selesai"]').val(data.jam_selesai);
 	            $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-	            $('.modal-title').text('Edit Data mapel'); // Set title to Bootstrap modal title
+	            $('.modal-title').text('Edit Data Jadwal Guru'); // Set title to Bootstrap modal title
 	        },
 	        error: function (jqXHR, textStatus, errorThrown)
 	        {
@@ -216,12 +227,10 @@
     var url;
 
     if(save_method == 'add') {
-        url = "<?php echo site_url('admin/mapel/tambah')?>";
+        url = "<?php echo site_url('admin/jadwal/tambah')?>";
     } else {
-        url = "<?php echo site_url('admin/mapel/update')?>";
+        url = "<?php echo site_url('admin/jadwal/update')?>";
     }
-
-
 
     // ajax adding data to database
     var formData = new FormData($('#form')[0]);
@@ -270,7 +279,7 @@
 
 <!--modal tambah dan edit -->
 <div class="modal fade" id="modal_form" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title"></h3>
@@ -281,18 +290,54 @@
                     <input type="hidden" id="csrfHash" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" style="display: none">
                     <div class="modal-body">
                         <div class="row">
-	                        <div class="col-md-12">
+	                        <div class="col-md-6">
+                                <input type="hidden" name="id">
 	                        	<div class="form-group">
-		                            <label >Kode Mapel</label>
-		                            <input type="text" class="form-control" placeholder="Kode Mapel" name="id" required maxlength="4" id="id" onkeypress='return check_int(event)'/>
+		                            <label >Nama Guru</label>
+		                            <select name="nip_guru" class="form-control">
+                                        <option>Pilih Guru</option>
+                                        <?php foreach ($guru->result() as $key) {
+                                            echo "<option value='".$key->nip."'>".$key->nama."</option>";
+                                        } ?>
+                                    </select>
 		                            <span class="help-block"></span>
 		                        </div>
-	                        	<div class="form-group">
-		                            <label >Nama mapel</label>
-		                            <input type="text" class="form-control" placeholder="Nama mapel" name="nama_mapel" required/>
-		                            <span class="help-block"></span>
-		                        </div>
+                                <div class="form-group">
+                                    <label >Kelas</label>
+                                    <select name="id_kelas" id="" class="form-control">
+                                        <option>Pilih Kelas</option>
+                                        <?php foreach ($kelas->result() as $key) {
+                                            echo "<option value='".$key->id."'>".$key->nama_kelas."</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="help-block"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label >Hari</label>
+                                    <select name="hari" class="form-control">
+                                        <option>Pilih Hari</option>
+                                        <option value="Senin">Senin</option>
+                                        <option value="Selasa">Selasa</option>
+                                        <option value="Rabu">Rabu</option>
+                                        <option value="Kamis">Kamis</option>
+                                        <option value="Jumat">Jumat</option>
+                                        <option value="Sabtu">Sabtu</option>
+                                    </select>
+                                    <span class="help-block"></span>
+                                </div>                            
 	                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label >Jam Masuk</label>
+                                    <input type="time" class="form-control" name="jam_masuk">
+                                    <span class="help-block"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label >Jam Selesai</label>
+                                    <input type="time" class="form-control" name="jam_selesai">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
 		                </div>
                     </div>
                 </form>

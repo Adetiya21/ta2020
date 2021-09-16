@@ -7,7 +7,7 @@ class M_guru extends CI_Model {
 
 	public function json() {
 		$this->datatables->select('tb_guru.nip,
-			tb_guru.id_kelas,
+			
 			tb_guru.id_mapel,
 			tb_guru.nama,
 			tb_guru.jenkel,
@@ -15,13 +15,11 @@ class M_guru extends CI_Model {
 			tb_guru.alamat,
 			tb_guru.no_telp,
 			tb_guru.password,
-			tb_kelas.id,
-			tb_kelas.nama_kelas,
 			tb_mapel.id,
 			tb_mapel.nama_mapel,
 			');
 		$this->datatables->from($this->table);
-		$this->datatables->join('tb_kelas', 'tb_guru.id_kelas=tb_kelas.id');
+		
 		$this->datatables->join('tb_mapel', 'tb_guru.id_mapel=tb_mapel.id');
 		$this->datatables->add_column('view', '<div align="center">
 			<a class="btn btn-primary btn-rounded btn-sm" href="javascript:void(0)" title="View" onclick="view($1)"> <span class="fa fa-eye"></span></a>
@@ -33,7 +31,7 @@ class M_guru extends CI_Model {
 
 	public function json_guru() {
 		$this->datatables->select('tb_guru.nip,
-			tb_guru.id_kelas,
+			
 			tb_guru.id_mapel,
 			tb_guru.nama,
 			tb_guru.jenkel,
@@ -41,13 +39,11 @@ class M_guru extends CI_Model {
 			tb_guru.alamat,
 			tb_guru.no_telp,
 			tb_guru.password,
-			tb_kelas.id,
-			tb_kelas.nama_kelas,
 			tb_mapel.id,
 			tb_mapel.nama_mapel,
 			');
 		$this->datatables->from($this->table);
-		$this->datatables->join('tb_kelas', 'tb_guru.id_kelas=tb_kelas.id');
+		
 		$this->datatables->join('tb_mapel', 'tb_guru.id_mapel=tb_mapel.id');
 		$this->datatables->add_column('view', '<div align="center">
 			<a class="btn btn-primary btn-rounded btn-sm" href="javascript:void(0)" title="View" onclick="view($1)"> <span class="fa fa-eye"></span></a>

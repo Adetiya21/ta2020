@@ -115,6 +115,14 @@
 											<span class="pcoded-mtext">Profil Siswa</span>
 										</a>
 									</li>
+									<li class="jadwal">
+										<a href="<?= site_url('jadwal') ?>" class="waves-effect waves-dark">
+											<span class="pcoded-micon">
+												<i class="feather icon-calendar"></i>
+											</span>
+											<span class="pcoded-mtext">Jadwal Kelas</span>
+										</a>
+									</li>
 									<li class="nilai">
 										<a href="<?= site_url('nilai') ?>" class="waves-effect waves-dark">
 											<span class="pcoded-micon">

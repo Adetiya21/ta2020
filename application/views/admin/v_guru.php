@@ -57,7 +57,7 @@
 										<tr><th width="1%">No</th>
 										<th>NIP</th>
 										<th>Nama Guru</th>
-										<th>Kelas</th>
+										<!-- <th>Kelas</th> -->
                                         <th>Mata Pelajaran</th>
 										<th width="10%">Action</th>
 										</tr>
@@ -121,7 +121,7 @@
         },
         {"data": "nip"},
         {"data": "nama"},
-        {"data": "nama_kelas"},
+        // {"data": "nama_kelas"},
         {"data": "nama_mapel"},
         // {"data": "status","orderable": false},
         {"data": "view","orderable": false}
@@ -196,7 +196,7 @@
 	        {
 	            $('[name="nip"]').val(data.nip);
 	            $('[name="nama"]').val(data.nama);
-                $('[name="kelas"]').val(data.kelas);
+                $('[name="password"]').val(data.password);
                 $('[name="jenkel"]').val(data.jenkel);
                 $('[name="agama"]').val(data.agama);
                 $('[name="no_telp"]').val(data.no_telp);
@@ -228,7 +228,6 @@
             {
                 $('[name="nip"]').val(data.nip);
                 $('[name="nama"]').val(data.nama);
-                $('[name="kelas"]').val(data.kelas);
                 $('[name="jenkel"]').val(data.jenkel);
                 $('[name="agama"]').val(data.agama);
                 $('[name="no_telp"]').val(data.no_telp);
@@ -336,16 +335,6 @@
 		                            <span class="help-block"></span>
 		                        </div>
                                 <div class="form-group">
-                                    <label>Kelas</label>
-                                    <select name="id_kelas" class="form-control">
-                                        <option>Pilih Kelas</option>
-                                        <?php foreach ($kelas->result() as $key) {?>
-                                        <option value="<?= $key->id ?>"><?= $key->nama_kelas ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <span class="help-block"></span>
-                                </div>  
-                                <div class="form-group">
                                     <label>Mapel</label>
                                     <select name="id_mapel" class="form-control">
                                         <option>Pilih mapel</option>
@@ -430,16 +419,6 @@
                                     <input type="text" class="form-control" placeholder="Nama guru" name="nama" required readonly/>
                                     <span class="help-block"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label>Kelas</label>
-                                    <select name="id_kelas" class="form-control" readonly>
-                                        <option>Pilih Kelas</option>
-                                        <?php foreach ($kelas->result() as $key) {?>
-                                        <option value="<?= $key->id ?>"><?= $key->nama_kelas ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <span class="help-block"></span>
-                                </div>  
                                 <div class="form-group">
                                     <label>Mapel</label>
                                     <select name="id_mapel" class="form-control" readonly>

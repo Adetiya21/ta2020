@@ -67,7 +67,11 @@
 							<li class="user-profile header-notification">
 								<div class="dropdown-primary dropdown">
 									<div class="dropdown-toggle" data-toggle="dropdown">
+										<?php if($this->session->userdata('gambar')==null){ ?>
 										<img src="<?= base_url('assets/') ?>assets/img/user.jpg" class="img-radius" alt="User-Profile-Image">
+										<?php } else { ?>
+											<img src="<?= base_url('assets/images/guru/'.$this->session->userdata('gambar')) ?>" class="img-radius" alt="User-Profile-Image">
+										<?php } ?>
 										<span><?php echo $this->session->userdata('nama')?></span>
 										<i class="feather icon-chevron-down"></i>
 									</div>
@@ -82,7 +86,7 @@
 											</a>
 										</li>
 										<li>
-											<a href="<?= site_url('guru/welcome/logout') ?>">
+											<a href="<?= site_url('welcome/logout') ?>">
 												<i class="feather icon-log-out"></i> Logout
 											</a>
 										</li>
@@ -138,14 +142,14 @@
 										</a>
 									</li>
 
-									<!-- <li class="siswa">
-										<a href="<?= site_url('guru/siswa') ?>" class="waves-effect waves-dark">
+									<li class="jadwal">
+										<a href="<?= site_url('guru/jadwal') ?>" class="waves-effect waves-dark">
 											<span class="pcoded-micon">
-												<i class="feather icon-users"></i>
+												<i class="feather icon-calendar"></i>
 											</span>
-											<span class="pcoded-mtext">Siswa</span>
+											<span class="pcoded-mtext">Jadwal</span>
 										</a>
-									</li> -->
+									</li>
 
 									<li class="siswa pcoded-hasmenu">
 										<a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -155,13 +159,16 @@
 											<span class="pcoded-mtext">Siswa</span>
 										</a>
 										<ul class="pcoded-submenu">
-											<?php foreach ($kelas->result() as $key) { ?>
-											<li class="data-pdft">
-												<a href="<?= site_url('guru/siswa/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
-													<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
-												</a>
-											</li>
-											<?php } ?>
+											<?php foreach ($kelas->result() as $key) { 
+												foreach ($jadwal->result() as $key1) { 
+													if($key->id==$key1->id_kelas){
+												?>
+														<li class="siswa-<?= $key->id ?>">
+															<a href="<?= site_url('guru/siswa/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
+																<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
+															</a>
+														</li>
+											<?php }}} ?>
 										</ul>
 									</li>
 									
@@ -173,13 +180,16 @@
 											<span class="pcoded-mtext">Penilaian</span>
 										</a>
 										<ul class="pcoded-submenu">
-											<?php foreach ($kelas->result() as $key) { ?>
-											<li class="data-pdft">
-												<a href="<?= site_url('guru/nilai/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
-													<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
-												</a>
-											</li>
-											<?php } ?>
+											<?php foreach ($kelas->result() as $key) { 
+													foreach ($jadwal->result() as $key1) { 
+														if($key->id==$key1->id_kelas){
+												?>
+													<li class="nilai-<?= $key->id ?>">
+														<a href="<?= site_url('guru/nilai/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
+															<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
+														</a>
+													</li>
+											<?php }}} ?>
 										</ul>
 									</li>
 

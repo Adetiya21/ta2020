@@ -14,7 +14,7 @@ class Nilai extends CI_Controller {
 		if ($this->session->userdata('guru_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
-			echo 'window.location.assign("'.site_url("guru/welcome").'")
+			echo 'window.location.assign("'.site_url("welcome").'")
 			</script>';
 		}
 		$this->load->model('m_nilai','Model');
@@ -47,7 +47,8 @@ class Nilai extends CI_Controller {
 			if ($cek1->num_rows() == 1) {
 				$data['kl1'] = $id_kelas;
 				$data['mapel'] = $this->DButama->GetDB('tb_mapel')->row();
-				$data['kelas'] = $this->DButama->GetDB('tb_kelas');
+				$data['jadwal'] = $this->db->order_by('id_kelas', 'asc');
+				$data['jadwal'] = $this->DButama->GetDBWhere('tb_jadwal', array('nip_guru' => $this->session->userdata('nip')));$data['kelas'] = $this->DButama->GetDB('tb_kelas');
 				$data['kls'] = $cek->row();
 				$data['mp'] = $cek1->row();
 				$data['title'] = 'Data Nilai '.$cek->row('nama_kelas').' '.$cek1->row('nama_mapel');

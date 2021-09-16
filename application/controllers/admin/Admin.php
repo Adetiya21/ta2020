@@ -93,22 +93,36 @@ class Admin extends CI_Controller {
 		}
 	}
 
-	//proses update
+	// fun proses update
 	public function update()
 	{
 		if ($this->input->is_ajax_request()) {
-			$where  = array('id' => $this->input->post('id'));
-			$query = $this->DButama->GetDBWhere($this->table,$where);
+			$where  = array('id' => $this->input->post('id'));  //filter berdasarkan id
+			$query = $this->DButama->GetDBWhere($this->table,$where);  //load database table tb_admin
 			$row = $query->row();
 			$pass=$this->input->post('password');
-			$hash=password_hash($pass, PASSWORD_DEFAULT);
-			$data = array(
+			$hash=password_hash($pass, PASSWORD_DEFAULT);  //membuat encrypt password
+			// jika password tidak di ganti
+			if ($row->password == $this->input->post('password')) {
+				$data = array(
+					'nama' => $this->input->post('nama'),
+					'username' => $this->input->post('username')
+				);
+				// fun update
+				$this->DButama->UpdateDB($this->table,$where,$data);
+				echo json_encode(array("status" => TRUE));
+
+			// jika password diganti
+			} else {
+				$data = array(
 					'nama' => $this->input->post('nama'),
 					'username' => $this->input->post('username'),
 					'password' => $hash
 				);
+				// fun update
 				$this->DButama->UpdateDB($this->table,$where,$data);
 				echo json_encode(array("status" => TRUE));
+			}
 		}
 	}
 

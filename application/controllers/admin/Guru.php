@@ -64,7 +64,6 @@ class Guru extends CI_Controller {
 				$hash=password_hash($pass, PASSWORD_DEFAULT);
 				$data = array(
 					'nip' => $this->input->post('nip'),
-					'id_kelas' => $this->input->post('id_kelas'),
 					'id_mapel' => $this->input->post('id_mapel'),
 					'nama' => $this->input->post('nama'),
 					'jenkel' => $this->input->post('jenkel'),
@@ -99,8 +98,25 @@ class Guru extends CI_Controller {
 			$row = $query->row();
 			$pass=$this->input->post('password');
 			$hash=password_hash($pass, PASSWORD_DEFAULT);
-			$data = array(
-					'id_kelas' => $this->input->post('id_kelas'),
+			
+			// jika password tidak di ganti
+			if ($row->password == $this->input->post('password')) {
+				$data = array(
+					'id_mapel' => $this->input->post('id_mapel'),
+					'nama' => $this->input->post('nama'),
+					'jenkel' => $this->input->post('jenkel'),
+					'agama' => $this->input->post('agama'),
+					'no_telp' => $this->input->post('no_telp'),
+					'alamat' => $this->input->post('alamat'),
+				);
+				// fun update
+				$this->DButama->UpdateDB($this->table,$where,$data);
+				echo json_encode(array("status" => TRUE));
+
+			// jika password diganti
+			} else {
+				$data = array(
+					'nama' => $this->input->post('nama'),
 					'id_mapel' => $this->input->post('id_mapel'),
 					'nama' => $this->input->post('nama'),
 					'jenkel' => $this->input->post('jenkel'),
@@ -109,8 +125,10 @@ class Guru extends CI_Controller {
 					'alamat' => $this->input->post('alamat'),
 					'password' => $hash
 				);
+				// fun update
 				$this->DButama->UpdateDB($this->table,$where,$data);
 				echo json_encode(array("status" => TRUE));
+			}
 		}
 	}
 

@@ -18,7 +18,7 @@ class Welcome extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('siswa/v_login');
+		$this->load->view('v_login');
 	}
 
 	public function login()
@@ -34,25 +34,30 @@ class Welcome extends CI_Controller {
 		} else {
 			$this->load->library('form_validation');
 			$config = array(
-				array('field' => 'nis','label' => "nis",'rules' => 'required' ),
+				array('field' => 'nis/nip','label' => "NIS/NIP",'rules' => 'required' ),
 				array('field' => 'password','label' => 'Password','rules' => 'required' )
 			);
 			$this->form_validation->set_rules($config);
 			if ($this->form_validation->run() == FALSE)
 			{
-				$this->session->set_flashdata('nis', set_value('nis') );
+				$this->session->set_flashdata('nis/nip', set_value('nis/nip') );
 				$this->session->set_flashdata('password', set_value('password') );
 				$this->session->set_flashdata('error', validation_errors());
 				redirect('welcome','refresh');
 			}else{
-				$query = $this->DButama->GetDBWhere('tb_siswa', array('nis' => $this->input->post('nis'), ));
-				if ($query->num_rows() == 0 ) {
+
+				// load database dengan nis/nip
+				$query = $this->DButama->GetDBWhere('tb_siswa', array('nis' => $this->input->post('nis/nip'), ));
+				$query_guru = $this->DButama->GetDBWhere('tb_guru',  array('nip' => $this->input->post('nis/nip')));
+				
+				if ($query->num_rows() == 0 && $query_guru->num_rows() == 0) {
 					$this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<strong>nis / Password Tidak Ada</strong> 
+						<strong>NIS/NIP/Password Tidak Ada</strong> 
 						</div>');
 					redirect('welcome','refresh');
-				}else{
+				} //login siswa
+				else if ($query->num_rows() == 1 ) {
 					$hasil = $query->row();
 					if (password_verify($this->input->post('password'), $hasil->password)) {
 						foreach ($query->result() as $key ) {
@@ -61,7 +66,8 @@ class Welcome extends CI_Controller {
 							$sess_data['nis'] = $key->nis;
 							$sess_data['id_kelas'] = $key->id_kelas;
 							$this->session->set_userdata($sess_data);
-							$this->session->unset_userdata('user_logged_in');
+							$this->session->unset_userdata('guru_logged_in');
+							$this->session->unset_userdata('admin_logged_in');
 							redirect('home', 'refresh');
 						}
 					}else{
@@ -70,6 +76,29 @@ class Welcome extends CI_Controller {
 							<strong>NIS / Password Tidak Ada</strong> 
 							</div>');
 						redirect('welcome','refresh');
+					}
+				} //login guru
+				else if ($query_guru->num_rows() == 1 ) {
+					$hasil_guru = $query_guru->row();
+					if (password_verify($this->input->post('password'), $hasil_guru->password)) {
+						foreach ($query_guru->result() as $key ) {
+							$sess_data['guru_logged_in'] = "Sudah_Loggin";
+							$sess_data['nama'] = $key->nama;
+							$sess_data['nip'] = $key->nip;
+							$sess_data['gambar'] = $key->gambar;
+							$sess_data['id_mapel'] = $key->id_mapel;
+							$this->session->set_userdata($sess_data);
+							$this->session->unset_userdata('admin_logged_in');  //mengeluarkan session user
+							$this->session->unset_userdata('siswa_logged_in');  //mengeluarkan session user
+							redirect('guru/home', 'refresh');
+						}
+					}else{
+						// menampilkan pesan error
+						$this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<strong>NIP / Password Tidak Ada</strong> 
+							</div>');
+						redirect('welcom','refresh');
 					}
 				}
 			}

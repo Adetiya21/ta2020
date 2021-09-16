@@ -1,18 +1,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-      $('.mapel').addClass('active');
+      $('.jadwal').addClass('active');
   	});
-
 
     function check_int(evt) {
       var charCode = ( evt.which ) ? evt.which : event.keyCode;
       return ( charCode >= 48 && charCode <= 57 || charCode == 8 );
-    }
-
-    function myFunction() {
-        var x = document.getElementById("id_mapel");
-        x.value = x.value.toUpperCase();
     }
 </script>
 
@@ -23,8 +17,8 @@
 				<div class="page-header-title">
 					<i class="feather icon-layout bg-c-blue"></i>
 					<div class="d-inline">
-						<h5>Mata Pelajaran</h5>
-						<span>Berikut data mapel.</span>
+						<h5>Jadwal <?= $kelas ?></h5>
+						<span>Berikut data jadwal kelas</span>
 					</div>
 				</div>
 			</div>
@@ -32,10 +26,10 @@
 				<div class="page-header-breadcrumb">
 					<ul class=" breadcrumb breadcrumb-title">
 						<li class="breadcrumb-item">
-							<a href="<?= site_url('guru/home') ?>"><i class="feather icon-home"></i></a>
+							<a href="<?= site_url('home') ?>"><i class="feather icon-home"></i></a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="<?= site_url('guru/mapel') ?>">Mata Pelajaran</a>
+							<a href="<?= site_url('jadwal') ?>">Jadwal Kelas</a>
 						</li>
 					</ul>
 				</div>
@@ -49,7 +43,7 @@
 				<div class="page-body">
 					<div class="card">
 						<div class="card-header">
-							<h5>Data Mata Pelajaran</h5>
+							<h5>Data Jadwal <?= $kelas ?></h5>
                             <div class="card-header-right"> <ul class="list-unstyled card-option"> <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li> <li><i class="feather icon-maximize full-card"></i></li> <li><i class="feather icon-minus minimize-card"></i></li> <li><i class="feather icon-refresh-cw reload-card"></i></li> <li><i class="feather icon-trash close-card"></i></li> <li><i class="feather icon-chevron-left open-card-option"></i></li> </ul> </div>
 						</div>
 						
@@ -58,8 +52,11 @@
 								<table id="compact" class="table table-bordered table-hover nowrap" width="100%">
 									<thead>
 										<tr><th width="1%">No</th>
-										<th>Kode mapel</th>
-										<th>Nama mapel</th>
+										<th>Nama Guru</th>
+										<th>Kelas</th>
+                                        <th>Mata Pelajaran</th>
+                                        <th>Hari</th>
+                                        <th>Jam</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -113,14 +110,17 @@
         },
         processing: true,
         serverSide: true,
-        ajax: {"url": "<?= base_url() ?>guru/mapel/json", "type": "POST"},
+        ajax: {"url": "<?= base_url() ?>jadwal/json", "type": "POST"},
         columns: [
         {
             "data": "id",
             "orderable": false
         },
-        {"data": "id"},
-        {"data": "nama_mapel"}
+        {"data": "nama"},
+        {"data": "nama_kelas"},
+        {"data": "nama_mapel"},
+        {"data": "hari"},
+        {"data": "jam"}
         ],
         order: [[1, 'asc']],
         rowCallback: function(row, data, iDisplayIndex) {

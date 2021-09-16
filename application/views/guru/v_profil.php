@@ -3,7 +3,6 @@
     $(document).ready(function() {
       $('.profil').addClass('active');
     });
-
     
     function check_int(evt) {
       var charCode = ( evt.which ) ? evt.which : event.keyCode;
@@ -64,7 +63,8 @@
                                     <!-- <form id="main" method="post" action="https://colorlib.com/" novalidate> -->
                                     <?= $this->session->flashdata('pesan'); ?>
                                     <?= $this->session->flashdata('error'); ?>
-                                    <?= form_open('guru/home/edit_profil'); ?>
+                                    <?php $arb = array('enctype' => "multipart/form-data", );?>
+                                    <?= form_open('guru/home/edit_profil',$arb); ?>
 
                                         <div class="row">
                                             <div class="col-md-6">
@@ -75,7 +75,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label >Password</label>
-                                                    <input type="password" class="form-control" placeholder="Isi Password Lagi!" name="password" required />
+                                                    <input type="password" class="form-control" placeholder="Isi Password Lagi!" name="password" value="<?= $profil->password; ?>" required />
                                                     <span class="help-block"></span>
                                                     <br>
                                                 </div>
@@ -86,15 +86,6 @@
                                                     <span class="help-block"></span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Kelas</label>
-                                                    <?php foreach ($kelas->result() as $key) {
-                                                            if($profil->id_kelas==$key->id){?>
-                                                    <input type="hidden" name="id_kelas" value="<?= $key->id ?>">
-                                                    <input type="text" class="form-control" value="<?= $key->nama_kelas ?>" readonly>
-                                                    <?php }} ?>
-                                                    <span class="help-block"></span>
-                                                </div>   
-                                                <div class="form-group">
                                                     <label>Mapel</label>
                                                     <?php foreach ($mapel->result() as $key) {
                                                             if($profil->id_mapel==$key->id){?>
@@ -102,9 +93,7 @@
                                                     <input type="text" class="form-control" value="<?= $key->nama_mapel ?>" readonly>
                                                     <?php }} ?>
                                                     <span class="help-block"></span>
-                                                </div>                               
-                                            </div>
-                                            <div class="col-md-6">
+                                                </div>  
                                                 <div class="form-group">
                                                     <label >Jenis Kelamin</label>
                                                     <select name="jenkel" class="form-control">
@@ -168,7 +157,9 @@
                                                         }?>
                                                     </select>
                                                     <span class="help-block"></span>
-                                                </div>
+                                                </div>                            
+                                            </div>
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label >No. Telp</label>
                                                     <input type="text" class="form-control" placeholder="No.Telp" name="no_telp" required maxlength="13" onkeypress='return check_int(event)' value="<?= $profil->no_telp ?>" />
@@ -179,6 +170,24 @@
                                                     <textarea name="alamat" class="form-control" cols="30" rows="3"><?= $profil->alamat ?></textarea>
                                                     <span class="help-block"></span>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label class="col-form-label">Foto</label>
+                                                    <input id="uploadImage" type="file" name="gambar" onchange="PreviewImage();" class="form-control" accept='image/*' value="<?= $profil->gambar ?>" />
+                                                    <p style="font-size: 0.7em; padding: 5px;">JPG, JPEG, PNG Max. 2MB</p>
+                                                    <div class="form-group" id="photo-preview">
+                                                      <div>
+                                                          <span class="help-block"></span>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group" id="photo">
+                                                      <div>
+                                                        <?php if($profil->gambar==null){ echo "<i>Gambar tidak ada</i>"; } else { ?>
+                                                        <img id="uploadPreview" style="max-width:200px;" class="img-thumbnail" src="<?= base_url('assets/images/guru/') ?><?= $profil->gambar ?>"/>
+                                                        <?php } ?>
+                                                          <span class="help-block"></span>
+                                                      </div>
+                                                  </div>                                            
+                                              </div>
                                             </div>
                                         </div>
                                         <hr>

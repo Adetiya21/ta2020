@@ -82,7 +82,7 @@
 											</a>
 										</li>
 										<li>
-											<a href="<?= site_url('guru/welcome/logout') ?>">
+											<a href="<?= site_url('welcome/logout') ?>">
 												<i class="feather icon-log-out"></i> Logout
 											</a>
 										</li>
@@ -138,6 +138,15 @@
 										</a>
 									</li>
 
+									<li class="jadwal">
+										<a href="<?= site_url('guru/jadwal') ?>" class="waves-effect waves-dark">
+											<span class="pcoded-micon">
+												<i class="feather icon-calendar"></i>
+											</span>
+											<span class="pcoded-mtext">Jadwal</span>
+										</a>
+									</li>
+
 									<li class="siswa pcoded-hasmenu">
 										<a href="javascript:void(0)" class="waves-effect waves-dark">
 											<span class="pcoded-micon">
@@ -147,7 +156,7 @@
 										</a>
 										<ul class="pcoded-submenu">
 											<?php foreach ($kelas->result() as $key) { ?>
-											<li class="data-pdft">
+											<li class="siswa-<?= $key->id ?>">
 												<a href="<?= site_url('guru/siswa/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
 													<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
 												</a>
@@ -165,7 +174,7 @@
 										</a>
 										<ul class="pcoded-submenu">
 											<?php foreach ($kelas->result() as $key) { ?>
-											<li class="data-pdft">
+											<li class="nilai-<?= $key->id ?>">
 												<a href="<?= site_url('guru/nilai/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
 													<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
 												</a>

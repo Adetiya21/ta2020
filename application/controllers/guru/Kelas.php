@@ -11,7 +11,7 @@ class Kelas extends CI_Controller {
 		if ($this->session->userdata('guru_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
-			echo 'window.location.assign("'.site_url("guru/welcome").'")
+			echo 'window.location.assign("'.site_url("welcome").'")
 			</script>';
 		}
 		$this->load->model('m_kelas','Model');
@@ -29,6 +29,8 @@ class Kelas extends CI_Controller {
 		$data['title'] = 'Data Kelas';
 		$data['kelas'] = $this->db->order_by('nama_kelas', 'asc');
 		$data['kelas'] = $this->DButama->GetDB('tb_kelas');
+		$data['jadwal'] = $this->db->order_by('id_kelas', 'asc');
+		$data['jadwal'] = $this->DButama->GetDBWhere('tb_jadwal', array('nip_guru' => $this->session->userdata('nip')));
 		$this->load->view('guru/temp-header',$data);
 		$this->load->view('guru/v_kelas');
 		$this->load->view('guru/temp-footer');

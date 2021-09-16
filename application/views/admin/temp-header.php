@@ -144,6 +144,24 @@
 										</a>
 									</li>
 
+									<li class="jadwal pcoded-hasmenu">
+										<a href="javascript:void(0)" class="waves-effect waves-dark">
+											<span class="pcoded-micon">
+												<i class="feather icon-calendar"></i>
+											</span>
+											<span class="pcoded-mtext">Jadwal</span>
+										</a>
+										<ul class="pcoded-submenu">
+											<?php foreach ($kelas->result() as $key) { ?>
+											<li class="jadwal-<?= $key->id ?>">
+												<a href="<?= site_url('admin/jadwal/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
+													<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
+												</a>
+											</li>
+											<?php } ?>
+										</ul>
+									</li>
+
 									<li class="siswa pcoded-hasmenu">
 										<a href="javascript:void(0)" class="waves-effect waves-dark">
 											<span class="pcoded-micon">
@@ -153,7 +171,7 @@
 										</a>
 										<ul class="pcoded-submenu">
 											<?php foreach ($kelas->result() as $key) { ?>
-											<li class="data-pdft">
+											<li class="siswa-<?= $key->id ?>">
 												<a href="<?= site_url('admin/siswa/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
 													<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
 												</a>

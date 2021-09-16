@@ -2,6 +2,7 @@
 <script>
     $(document).ready(function() {
       $('.siswa').addClass('active');
+      $('.siswa-<?= $kls ?>').addClass('active');
   	});
 
     function check_int(evt) {

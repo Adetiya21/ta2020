@@ -11,7 +11,7 @@ class Guru extends CI_Controller {
 		if ($this->session->userdata('guru_logged_in') !=  "Sudah_Loggin") {
 			echo "<script>
 			alert('Login Dulu!');";
-			echo 'window.location.assign("'.site_url("guru/welcome").'")
+			echo 'window.location.assign("'.site_url("welcome").'")
 			</script>';
 		}
 		$this->load->model('m_guru','Model');
@@ -30,6 +30,8 @@ class Guru extends CI_Controller {
 		$data['kelas'] = $this->DButama->GetDB('tb_kelas');
 		$data['mapel'] = $this->db->order_by('nama_mapel', 'asc');
 		$data['mapel'] = $this->DButama->GetDB('tb_mapel');
+		$data['jadwal'] = $this->db->order_by('id_kelas', 'asc');
+		$data['jadwal'] = $this->DButama->GetDBWhere('tb_jadwal', array('nip_guru' => $this->session->userdata('nip')));
 		$data['title'] = 'Data Guru';
 		$this->load->view('guru/temp-header',$data);
 		$this->load->view('guru/v_guru',$data);

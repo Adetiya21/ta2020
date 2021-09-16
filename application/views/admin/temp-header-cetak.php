@@ -144,6 +144,15 @@
 										</a>
 									</li>
 
+									<li class="jadwal">
+										<a href="<?= site_url('admin/jadwal') ?>" class="waves-effect waves-dark">
+											<span class="pcoded-micon">
+												<i class="feather icon-calendar"></i>
+											</span>
+											<span class="pcoded-mtext">Jadwal</span>
+										</a>
+									</li>
+
 									<li class="siswa pcoded-hasmenu">
 										<a href="javascript:void(0)" class="waves-effect waves-dark">
 											<span class="pcoded-micon">

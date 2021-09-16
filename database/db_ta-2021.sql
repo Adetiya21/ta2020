@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 27 Mar 2021 pada 15.53
+-- Waktu pembuatan: 16 Sep 2021 pada 09.54
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.3
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_ta2020`
+-- Database: `db_ta-2021`
 --
 
 -- --------------------------------------------------------
@@ -40,7 +40,7 @@ CREATE TABLE `tb_admin` (
 --
 
 INSERT INTO `tb_admin` (`id`, `nama`, `username`, `password`) VALUES
-(1, 'Putri Berkahati', '0', '$2y$10$j.0n.HBIJAPj/3uHAFC1X.SE0nNxgHLPWfASJ.4tWKbiImQZhfF3K');
+(1, 'Admin', '0', '$2y$10$d5YlaSA.F6Vta0qxmfDoH.O4McM0ZJp57jIrm61R94vTXSDouE3S2');
 
 -- --------------------------------------------------------
 
@@ -50,29 +50,29 @@ INSERT INTO `tb_admin` (`id`, `nama`, `username`, `password`) VALUES
 
 CREATE TABLE `tb_guru` (
   `nip` varchar(12) NOT NULL,
-  `id_kelas` int(3) NOT NULL,
   `id_mapel` int(4) NOT NULL,
   `nama` varchar(30) NOT NULL,
   `jenkel` enum('Laki-Laki','Perempuan') NOT NULL,
   `agama` enum('Islam','Kristen','Katolik','Hindu','Buddha','Kong Hu Cu') NOT NULL,
   `alamat` text NOT NULL,
   `no_telp` varchar(13) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `gambar` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_guru`
 --
 
-INSERT INTO `tb_guru` (`nip`, `id_kelas`, `id_mapel`, `nama`, `jenkel`, `agama`, `alamat`, `no_telp`, `password`) VALUES
-('198001011001', 101, 1011, 'Eko Saputra, S.Pd', 'Laki-Laki', 'Islam', 'semparuk', '085345453070', '$2y$10$RseV.MEJBDRay4Dm2dZhZ.HiKxI.4zOeXoc5dbkXyOrb8Iu5leYR2'),
-('198001011009', 101, 1012, 'Romi, S.Pd', 'Laki-Laki', 'Hindu', 'pemangkat', '085750683895', '$2y$10$Iikg24e88.MGGbgrIEOGtewwZchzaYXb/G8oJCu7GzKP3Nsf23DsW'),
-('198002022002', 102, 1013, 'Asmawati.A, S.Pd', 'Perempuan', 'Islam', 'tebas', '085750683895', '$2y$10$eQvqyHCbNPOFP5QG6erhbOfNPi2m5tb1qwIkze/iBlMxPG28mwYHC'),
-('198003031003', 103, 1015, 'Ade Kurniawan, S.Pd', 'Laki-Laki', 'Islam', 'sempalai', '082153427150', '$2y$10$gp11HhUFAfgERvnmEvMaO.Qmb5vBorPQe10zYnvsqVyt7U1C0ec5.'),
-('198004042004', 104, 1016, 'Reni Handriyani, S,Pd', 'Perempuan', 'Islam', 'tebas', '089531074848', '$2y$10$MtM8SNgEmmkl2gv9o76jKu1uuJwhkE7E.8xjPsuAKCImi78ItIvMm'),
-('198005051005', 105, 1012, 'Romi, S.Pd', 'Laki-Laki', 'Islam', 'pemangkat', '082153427151', '$2y$10$/ryyYKWgHoQMF3kUc.2HdeUsuCmNNepkPKcpnZdPpRC/X.dPex356'),
-('198006062006', 106, 1018, 'Nurwati, S.Pd ', 'Perempuan', 'Islam', 'sambas', '085304042359', '$2y$10$kCR12bc95YomrwwDTn1j7.yfGH6FD6id2qhQZ57qrgtZ0tRw/YZ4a'),
-('198007071007', 101, 1017, 'Alimin, S.Pd', 'Laki-Laki', 'Islam', 'tebas', '089531074849', '$2y$10$AUhIWYFB8Cv8mn7MfXLNB.OZufmP45u0dsx5VLlw9ajZNBHVdhR0O');
+INSERT INTO `tb_guru` (`nip`, `id_mapel`, `nama`, `jenkel`, `agama`, `alamat`, `no_telp`, `password`, `gambar`) VALUES
+('198001011001', 1011, 'Eko Saputra, S.Pd', 'Laki-Laki', 'Islam', 'semparuk', '085345453070', '$2y$10$RseV.MEJBDRay4Dm2dZhZ.HiKxI.4zOeXoc5dbkXyOrb8Iu5leYR2', NULL),
+('198001011009', 1012, 'Romi, S.Pd', 'Laki-Laki', 'Hindu', 'pemangkat', '085750683895', '$2y$10$Iikg24e88.MGGbgrIEOGtewwZchzaYXb/G8oJCu7GzKP3Nsf23DsW', NULL),
+('198002022002', 1013, 'Asmawati.A, S.Pd', 'Perempuan', 'Islam', 'tebas', '085750683895', '$2y$10$eQvqyHCbNPOFP5QG6erhbOfNPi2m5tb1qwIkze/iBlMxPG28mwYHC', NULL),
+('198003031003', 1015, 'Ade Kurniawan, S.Pd', 'Laki-Laki', 'Islam', 'sempalai', '082153427150', '$2y$10$gp11HhUFAfgERvnmEvMaO.Qmb5vBorPQe10zYnvsqVyt7U1C0ec5.', NULL),
+('198004042004', 1016, 'Reni Handriyani, S,Pd', 'Perempuan', 'Islam', 'tebas', '089531074848', '$2y$10$MtM8SNgEmmkl2gv9o76jKu1uuJwhkE7E.8xjPsuAKCImi78ItIvMm', NULL),
+('198005051005', 1012, 'Roni, S.Pd', 'Laki-Laki', 'Islam', 'pemangkat', '082153427151', '$2y$10$/ryyYKWgHoQMF3kUc.2HdeUsuCmNNepkPKcpnZdPpRC/X.dPex356', NULL),
+('198006062006', 1018, 'Nurwati, S.Pd ', 'Perempuan', 'Islam', 'sambas', '085304042359', '$2y$10$kCR12bc95YomrwwDTn1j7.yfGH6FD6id2qhQZ57qrgtZ0tRw/YZ4a', NULL),
+('198007071007', 1017, 'Alimin, S.Pd', 'Laki-Laki', 'Islam', 'tebas', '089531074849', '$2y$10$AUhIWYFB8Cv8mn7MfXLNB.OZufmP45u0dsx5VLlw9ajZNBHVdhR0O', '950f744361a368212f17a5f461d8173f.png');
 
 -- --------------------------------------------------------
 
@@ -97,7 +97,8 @@ INSERT INTO `tb_jadwal` (`id`, `id_kelas`, `nip_guru`, `hari`, `jam_masuk`, `jam
 (1, 105, '198001011001', 'Senin', '12:00:00', '00:00:00'),
 (2, 102, '198001011001', 'Kamis', '14:00:00', '18:00:00'),
 (3, 106, '198001011001', 'Rabu', '08:00:00', '10:00:00'),
-(4, 101, '198007071007', 'Selasa', '11:00:00', '13:00:00');
+(4, 101, '198007071007', 'Selasa', '11:00:00', '13:00:00'),
+(8, 103, '198001011001', 'Senin', '10:00:00', '11:00:00');
 
 -- --------------------------------------------------------
 
@@ -180,22 +181,6 @@ INSERT INTO `tb_nilaisiswa` (`id`, `nis`, `id_kelas`, `id_mapel`, `h1`, `h2`, `h
 (6, '200603001', 101, 1016, 0, 0, 0, 0, 0, 0, 0),
 (7, '200603001', 101, 1017, 0, 0, 0, 0, 0, 0, 0),
 (8, '200603001', 101, 1018, 0, 0, 0, 0, 0, 0, 0),
-(9, '2006002', 101, 1011, 80, 90, 80, 90, 90, 430, 86),
-(10, '2006002', 101, 1012, 0, 0, 0, 0, 0, 0, 0),
-(11, '2006002', 101, 1013, 0, 0, 0, 0, 0, 0, 0),
-(12, '2006002', 101, 1014, 0, 0, 0, 0, 0, 0, 0),
-(13, '2006002', 101, 1015, 0, 0, 0, 0, 0, 0, 0),
-(14, '2006002', 101, 1016, 0, 0, 0, 0, 0, 0, 0),
-(15, '2006002', 101, 1017, 0, 0, 0, 0, 0, 0, 0),
-(16, '2006002', 101, 1018, 0, 0, 0, 0, 0, 0, 0),
-(17, '2006003', 101, 1011, 90, 90, 90, 90, 90, 450, 90),
-(18, '2006003', 101, 1012, 0, 0, 0, 0, 0, 0, 0),
-(19, '2006003', 101, 1013, 0, 0, 0, 0, 0, 0, 0),
-(20, '2006003', 101, 1014, 0, 0, 0, 0, 0, 0, 0),
-(21, '2006003', 101, 1015, 0, 0, 0, 0, 0, 0, 0),
-(22, '2006003', 101, 1016, 0, 0, 0, 0, 0, 0, 0),
-(23, '2006003', 101, 1017, 0, 0, 0, 0, 0, 0, 0),
-(24, '2006003', 101, 1018, 0, 0, 0, 0, 0, 0, 0),
 (25, '200603004', 101, 1011, 95, 80, 80, 90, 100, 445, 89),
 (26, '200603004', 101, 1012, 0, 0, 0, 0, 0, 0, 0),
 (27, '200603004', 101, 1013, 0, 0, 0, 0, 0, 0, 0),
@@ -213,7 +198,7 @@ INSERT INTO `tb_nilaisiswa` (`id`, `nis`, `id_kelas`, `id_mapel`, `h1`, `h2`, `h
 (39, '200603005', 101, 1017, 0, 0, 0, 0, 0, 0, 0),
 (40, '200603005', 101, 1018, 0, 0, 0, 0, 0, 0, 0),
 (129, '190603001', 102, 1011, 0, 0, 0, 0, 0, 0, 0),
-(130, '190603001', 102, 1012, 0, 0, 0, 0, 0, 0, 0),
+(130, '190603001', 102, 1012, 100, 100, 100, 100, 100, 500, 100),
 (131, '190603001', 102, 1013, 0, 0, 0, 0, 0, 0, 0),
 (132, '190603001', 102, 1014, 0, 0, 0, 0, 0, 0, 0),
 (133, '190603001', 102, 1015, 0, 0, 0, 0, 0, 0, 0),
@@ -461,9 +446,7 @@ INSERT INTO `tb_siswa` (`nis`, `id_kelas`, `nama`, `tgl_lahir`, `tmp_lahir`, `je
 ('190603003', 102, 'Kurli', '2013-09-12', 'tebas', 'Laki-Laki', 'Islam', 'sempalai', '$2y$10$WOkJbA/zwcmi/I9pGneeR.q2rWzDuvzNq9JdbxSiNCrycO4raulDG'),
 ('190603004', 102, 'Anggi', '2013-09-25', 'tebas', 'Laki-Laki', 'Islam', 'sempalai', '$2y$10$8wlBZH5UFsDr9Nw4ItrOVu7D1k4T5jW5hON0MZStt42Wefjkx5D7q'),
 ('190603005', 102, 'Anto saputra', '2013-01-12', 'semparuk', 'Laki-Laki', 'Islam', 'sempalai', '$2y$10$6fmAg2te7/lcgVB5v2nxZOSd3UEiM997BlFMyRDZJwx5H4Jd5tU9S'),
-('2006002', 101, 'Falisha Inara', '2014-12-05', 'Pemangkat', '', '', 'Sempalai', '$2y$10$J6o02OpMNM44MjQ5EEI8GehuM6rmsW2xcjcyf5zj2Jes9h.VNIrwG'),
-('2006003', 101, 'Doni saputra', '2014-03-07', 'Sempalai', 'Laki-Laki', 'Islam', 'sempalai', '$2y$10$vGgxCBd5F2X/Bj3709LLUet6o8nLUKI..xfnIn3t0LnnPAK.OiAoi'),
-('200603001', 101, 'Hanif abqari', '2014-12-05', 'Pemangkat', 'Laki-Laki', 'Islam', 'pemangkat', '$2y$10$52YEi0ev7cPrzV4Uqiz8fOEe4ZKJ0QsVkYsejBtZ9.ctY.Dr1OTnW'),
+('200603001', 101, 'Hanif Abqari', '2014-12-05', 'Pemangkat', 'Laki-Laki', 'Islam', 'pemangkat', '$2y$10$52YEi0ev7cPrzV4Uqiz8fOEe4ZKJ0QsVkYsejBtZ9.ctY.Dr1OTnW'),
 ('200603004', 101, 'Rarasilawati', '2014-03-12', 'Sempalai', 'Perempuan', 'Islam', 'sempalai', '$2y$10$dcR3XlN.1xLNrS8MTK5BeuC/1B72eFcdYTfLD18s1CQ8WCP4WKa/O'),
 ('200603005', 101, 'suhendra', '2014-03-21', 'Sempalai', 'Laki-Laki', 'Islam', 'sempalai', '$2y$10$J9lXGM6y8w44JOXCrQ.gl.cQW0Hp6c0xZ4Q3MDxNlhv.A8Auk3Cqm');
 
@@ -482,7 +465,6 @@ ALTER TABLE `tb_admin`
 --
 ALTER TABLE `tb_guru`
   ADD PRIMARY KEY (`nip`),
-  ADD KEY `id_kelas` (`id_kelas`),
   ADD KEY `id_mapel` (`id_mapel`);
 
 --
@@ -535,7 +517,7 @@ ALTER TABLE `tb_admin`
 -- AUTO_INCREMENT untuk tabel `tb_jadwal`
 --
 ALTER TABLE `tb_jadwal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kelas`
@@ -557,7 +539,6 @@ ALTER TABLE `tb_nilaisiswa`
 -- Ketidakleluasaan untuk tabel `tb_guru`
 --
 ALTER TABLE `tb_guru`
-  ADD CONSTRAINT `tb_guru_ibfk_1` FOREIGN KEY (`id_kelas`) REFERENCES `tb_kelas` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `tb_guru_ibfk_2` FOREIGN KEY (`id_mapel`) REFERENCES `tb_mapel` (`id`) ON DELETE CASCADE;
 
 --

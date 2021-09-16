@@ -1,0 +1,15 @@
+Penting!
+
+Admin
+username : 0
+password : 0
+
+Guru
+NIP : 198001011001
+Pass: 12345
+
+Siswa
+NIS : 200603004
+Pass: 12345
+
+Untuk data mapel diusahakan id jangan diganti karna sudah di set di codingan kecuali mau rubah dicoding

@@ -192,15 +192,6 @@
 											<?php }}} ?>
 										</ul>
 									</li>
-
-									<!-- <li class="nilai">
-										<a href="<?= site_url('guru/nilai') ?>" class="waves-effect waves-dark">
-											<span class="pcoded-micon">
-												<i class="feather icon-book"></i>
-											</span>
-											<span class="pcoded-mtext">Penilaian</span>
-										</a>
-									</li> -->
 								</ul><hr>
 								<div class="pcoded-navigation-label" style="text-align: center;">Copyright© 2020<br>Allrights Reserved.</div>
 

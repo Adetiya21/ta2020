@@ -20,13 +20,6 @@ class Nilai extends CI_Controller {
 		$this->load->model('m_nilai','Model');
 	}
 
-	// public function json() {
-	// 	if ($this->input->is_ajax_request()) {
-	// 		header('Content-Type: application/json');
-	// 		echo $this->Model->json_guru();
-	// 	}
-	// }
-
 	public function json($id_kelas) {
 		if ($this->input->is_ajax_request()) {
 			header('Content-Type: application/json');
@@ -71,6 +64,8 @@ class Nilai extends CI_Controller {
 			if ($cek1->num_rows() == 1) {
 				$data['kl1'] = $id_kelas;
 				$data['mapel'] = $this->DButama->GetDB('tb_mapel')->row();
+				$data['jadwal'] = $this->db->order_by('id_kelas', 'asc');
+				$data['jadwal'] = $this->DButama->GetDBWhere('tb_jadwal', array('nip_guru' => $this->session->userdata('nip')));$data['kelas'] = $this->DButama->GetDB('tb_kelas');
 				$data['kelas'] = $this->DButama->GetDB('tb_kelas');
 				$data['kls'] = $cek->row();
 				$data['mp'] = $cek1->row();

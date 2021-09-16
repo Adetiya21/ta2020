@@ -155,13 +155,16 @@
 											<span class="pcoded-mtext">Siswa</span>
 										</a>
 										<ul class="pcoded-submenu">
-											<?php foreach ($kelas->result() as $key) { ?>
-											<li class="siswa-<?= $key->id ?>">
-												<a href="<?= site_url('guru/siswa/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
-													<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
-												</a>
-											</li>
-											<?php } ?>
+											<?php foreach ($kelas->result() as $key) { 
+												foreach ($jadwal->result() as $key1) { 
+													if($key->id==$key1->id_kelas){
+												?>
+														<li class="siswa-<?= $key->id ?>">
+															<a href="<?= site_url('guru/siswa/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
+																<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
+															</a>
+														</li>
+											<?php }}} ?>
 										</ul>
 									</li>
 									
@@ -173,13 +176,16 @@
 											<span class="pcoded-mtext">Penilaian</span>
 										</a>
 										<ul class="pcoded-submenu">
-											<?php foreach ($kelas->result() as $key) { ?>
-											<li class="nilai-<?= $key->id ?>">
-												<a href="<?= site_url('guru/nilai/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
-													<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
-												</a>
-											</li>
-											<?php } ?>
+											<?php foreach ($kelas->result() as $key) { 
+													foreach ($jadwal->result() as $key1) { 
+														if($key->id==$key1->id_kelas){
+												?>
+													<li class="nilai-<?= $key->id ?>">
+														<a href="<?= site_url('guru/nilai/kelas/'.$key->id) ?>" class="waves-effect waves-dark">
+															<span class="pcoded-mtext"><?= $key->nama_kelas; ?></span>
+														</a>
+													</li>
+											<?php }}} ?>
 										</ul>
 									</li>
 								</ul><hr>

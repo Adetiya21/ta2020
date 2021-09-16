@@ -75,7 +75,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label >Password</label>
-                                                    <input type="password" class="form-control" placeholder="Isi Password Lagi!" name="password" required />
+                                                    <input type="password" class="form-control" placeholder="Isi Password Lagi!" name="password" required value="<?= $profil->password ?>" />
                                                     <span class="help-block"></span>
                                                     <br>
                                                 </div>

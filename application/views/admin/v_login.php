@@ -35,15 +35,15 @@
         <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
             style="background:url(<?= base_url('assets/')?>assets/images/big/auth-bg.jpg) no-repeat center center;">
             <div class="auth-box row">
-                <div class="col-lg-6 col-md-5 modal-bg-img" style="background-image: url(<?= base_url('assets/')?>assets/images/big/3.jpg);">
+                <div class="col-lg-6 col-md-5 modal-bg-img " style="background-image: url(<?= base_url('assets/')?>assets/images/big/bg-login.jpg);">
                 </div>
                 <div class="col-lg-6 col-md-7 bg-white">
-                    <div class="p-3">
+                    <div class="p-4 mt-3">
                         <div class="text-center">
                             <img src="<?= base_url('assets/')?>assets/images/big/icon.png" alt="wrapkit">
                         </div>
-                        <h2 class="mt-3 text-center">LOGIN ADMIN</h2>
-                        <p class="text-center">Login untuk dapat memanagemen seluruh data website</p>
+                        <h3 class="mt-3 text-center">LOGIN ADMIN</h3>
+                        <p class="text-center">Login untuk dapat memanagemen<br> seluruh data website</p>
                         <?= $this->session->flashdata('pesan'); ?>
                         <?= $this->session->flashdata('error'); ?>
                         <?= form_open('admin/welcome/login'); ?>
@@ -51,23 +51,25 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="text-dark" for="uname">Username</label>
+                                        <!-- <label class="text-dark" for="uname">Username</label> -->
                                         <input class="form-control" id="uname" type="text" name="username" 
-                                            placeholder="Masukkan Username" value="<?= $this->session->flashdata('username'); ?>">
+                                            placeholder="Masukkan Username" value="<?= $this->session->flashdata('username'); ?>" style="border-radius:5px">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="text-dark" for="pwd">Password</label>
+                                        <!-- <label class="text-dark" for="pwd">Password</label> -->
                                         <input class="form-control" id="pwd" type="password" name="password" 
-                                            placeholder="Masukkan Password" value="<?= $this->session->flashdata('password'); ?>">
+                                            placeholder="Masukkan Password" value="<?= $this->session->flashdata('password'); ?>" style="border-radius:5px">
                                     </div>
                                 </div>
-                                <div class="col-lg-12 text-center">
+                                <div class="col-lg-12 text-center pl-4">
                                     <?= $this->recaptcha->getWidget() ?>
                                 </div>
-                                <div class="col-lg-12 text-center">
-                                    <button class="btn btn-block btn-dark">Login</button>
+                                <div class="col-lg-12 text-center mt-3">
+                                    <button class="btn btn-block btn-dark" style="border-radius:5px">Login</button>
+                                    <hr>
+                                    <p style="font-size: 0.8em;">Copyright© 2021. Allrights Reserved.</p>
                                 </div>
                             </div>
                         <!-- </form> -->

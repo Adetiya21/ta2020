@@ -72,7 +72,13 @@ class Guru extends CI_Controller {
 					'alamat' => $this->input->post('alamat'),
 					'password' => $hash					
 				);
-				
+				// upload gambar
+				$gambar = $_FILES['gambar']['name'];
+				if(!empty($gambar))
+				{
+					$upload = $this->_do_upload();
+					$data['gambar'] = $upload;
+				}
 				$this->DButama->AddDB($this->table,$data);
 				echo json_encode(array("status" => TRUE));
 			}
@@ -109,6 +115,24 @@ class Guru extends CI_Controller {
 					'no_telp' => $this->input->post('no_telp'),
 					'alamat' => $this->input->post('alamat'),
 				);
+				// hapus gambar
+				if($this->input->post('remove_photo')) 
+				{
+					if(file_exists('assets/images/guru/'.$this->input->post('remove_photo')) && $this->input->post('remove_photo'))
+						unlink('assets/images/guru/'.$this->input->post('remove_photo'));
+					$data['gambar'] = null;
+				}
+
+				// mengupload gambar baru
+				if(!empty($_FILES['gambar']['name']))
+				{
+					$upload = $this->_do_upload();
+	        		//hapus gambar lama di folder
+					$row_cek = $this->DButama->GetDBWhere($this->table,$where)->row();
+					if(file_exists('assets/images/guru/'.$row_cek->gambar) && $row_cek->gambar)
+						unlink('assets/images/guru/'.$row_cek->gambar);
+					$data['gambar'] = $upload;
+				}
 				// fun update
 				$this->DButama->UpdateDB($this->table,$where,$data);
 				echo json_encode(array("status" => TRUE));
@@ -125,12 +149,51 @@ class Guru extends CI_Controller {
 					'alamat' => $this->input->post('alamat'),
 					'password' => $hash
 				);
+				// hapus gambar
+				if($this->input->post('remove_photo')) 
+				{
+					if(file_exists('assets/images/guru/'.$this->input->post('remove_photo')) && $this->input->post('remove_photo'))
+						unlink('assets/images/guru/'.$this->input->post('remove_photo'));
+					$data['gambar'] = null;
+				}
+
+				// mengupload gambar baru
+				if(!empty($_FILES['gambar']['name']))
+				{
+					$upload = $this->_do_upload();
+	        		//hapus gambar lama di folder
+					$row_cek = $this->DButama->GetDBWhere($this->table,$where)->row();
+					if(file_exists('assets/images/guru/'.$row_cek->gambar) && $row_cek->gambar)
+						unlink('assets/images/guru/'.$row_cek->gambar);
+					$data['gambar'] = $upload;
+				}
 				// fun update
 				$this->DButama->UpdateDB($this->table,$where,$data);
 				echo json_encode(array("status" => TRUE));
 			}
 		}
 	}
+
+	// proses upload gambar
+	private function _do_upload()
+	{
+		$config['upload_path']   = 'assets/images/guru/';  //lokasi folder
+		$config['allowed_types'] = 'jpg|png|jpeg';
+		$config['remove_spaces'] = TRUE;
+		$config['encrypt_name']  = TRUE;
+        $config['file_name']     = round(microtime(true) * 1000); //just milisecond timestamp fot unique name
+        $this->load->library('upload', $config);
+
+        if(!$this->upload->do_upload('gambar')) //upload and validate
+        {
+        	$data['inputerror'][] = 'gambar';
+            $data['error_string'][] = 'Upload error: '.$this->upload->display_errors('',''); //show ajax error
+            $data['status'] = FALSE;
+            echo json_encode($data);
+            exit();
+        }
+        return $this->upload->data('file_name');
+    }
 
 }
 

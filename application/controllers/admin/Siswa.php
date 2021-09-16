@@ -101,18 +101,6 @@ class Siswa extends CI_Controller {
 				);
 				$this->DButama->AddDB($this->tablenilai,$data1);
 				}
-				// $data1 = array(
-				// 	'nis' => $this->input->post('nis'),
-				// 	'id_kelas' => $this->input->post('id_kelas'),
-				// 	'h1' => '0',
-				// 	'h2' => '0',
-				// 	'h3' => '0',
-				// 	'uts' => '0',
-				// 	'uas' => '0',
-				// 	'total' => '0',
-				// 	'rata' => '0'
-				// );
-				
 				echo json_encode(array("status" => TRUE));
 			}
 		}
@@ -140,7 +128,25 @@ class Siswa extends CI_Controller {
 	        $tgl_lahir = date('Y-m-d', strtotime($tgl_lahir));        
 			$pass=$this->input->post('password');
 			$hash=password_hash($pass, PASSWORD_DEFAULT);
-			$data = array(
+			
+			// jika password tidak di ganti
+			if ($row->password == $this->input->post('password')) {
+				$data = array(
+					'id_kelas' => $this->input->post('id_kelas'),
+					'nama' => $this->input->post('nama'),
+					'tgl_lahir' => $tgl_lahir,
+					'tmp_lahir' => $this->input->post('tmp_lahir'),
+					'jenkel' => $this->input->post('jenkel'),
+					'agama' => $this->input->post('agama'),
+					'alamat' => $this->input->post('alamat'),
+				);
+				// fun update
+				$this->DButama->UpdateDB($this->table,$where,$data);
+				echo json_encode(array("status" => TRUE));
+
+			// jika password diganti
+			} else {
+				$data = array(
 					'id_kelas' => $this->input->post('id_kelas'),
 					'nama' => $this->input->post('nama'),
 					'tgl_lahir' => $tgl_lahir,
@@ -150,8 +156,10 @@ class Siswa extends CI_Controller {
 					'alamat' => $this->input->post('alamat'),
 					'password' => $hash
 				);
+				// fun update
 				$this->DButama->UpdateDB($this->table,$where,$data);
 				echo json_encode(array("status" => TRUE));
+			}
 		}
 	}
 

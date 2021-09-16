@@ -207,6 +207,7 @@
 	        {
 	            $('[name="nis"]').val(data.nis);
 	            $('[name="nama"]').val(data.nama);
+                $('[name="password"]').val(data.password);
                 $('[name="kelas"]').val(data.kelas);
                 $('[name="tgl_lahir"]').val(data.tgl_lahir);
                 $('[name="tmp_lahir"]').val(data.tmp_lahir);
@@ -444,7 +445,6 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Kelas</label>
-                                    <!-- <input type="text" class="form-control" placeholder="Nama Siswa" name="nama" required readonly/> -->
                                     <select name="id_kelas" class="form-control" readonly>
                                         <option>Pilih Kelas</option>
                                         <?php foreach ($kelas->result() as $key) {?>

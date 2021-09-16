@@ -8,6 +8,16 @@
       var charCode = ( evt.which ) ? evt.which : event.keyCode;
       return ( charCode >= 48 && charCode <= 57 || charCode == 8 );
     }
+    function PreviewImage() {
+        $('#photo-preview div').empty();
+        $('#photo div').html('<img id="uploadPreview" style="max-width:200px;" class="img-thumbnail" />'); // show photo
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview").src = oFREvent.target.result;
+        };
+    };
 </script>
 
 <div class="pcoded-content">
@@ -55,7 +65,8 @@
 								<table id="compact" class="table table-bordered table-hover nowrap" width="100%">
 									<thead>
 										<tr><th width="1%">No</th>
-										<th>NIP</th>
+										<th width="60px">Gambar</th>
+                                        <th>NIP</th>
 										<th>Nama Guru</th>
 										<!-- <th>Kelas</th> -->
                                         <th>Mata Pelajaran</th>
@@ -119,6 +130,16 @@
             "data": "nip",
             "orderable": false
         },
+        {"data": "gambar","orderable": false,
+        render: function(data) { 
+            if(data!==null) {
+                // return 'Tidak Ada Foto'
+                return '<img class="img-thumbnail" width="100%" src="<?= base_url('assets/images/guru/') ?>'+data+'">' 
+            } else {
+                return '<i>(Tidak ada foto)</i>'
+            }},
+            defaultContent: 'gambar'
+        },
         {"data": "nip"},
         {"data": "nama"},
         // {"data": "nama_kelas"},
@@ -126,7 +147,7 @@
         // {"data": "status","orderable": false},
         {"data": "view","orderable": false}
         ],
-        order: [[1, 'asc']],
+        order: [[2, 'asc']],
         rowCallback: function(row, data, iDisplayIndex) {
             var info = this.fnPagingInfo();
             var page = info.iPage;
@@ -205,6 +226,17 @@
                 $('[name="id_mapel"]').val(data.id_mapel);
                 $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 	            $('.modal-title').text('Edit Data guru Kelas'); // Set title to Bootstrap modal title
+                if(data.gambar)
+                {
+                    $('#label-photo').text('Change Photo'); // label photo upload
+                    $('#photo-preview div').html('<img src="<?= base_url('assets/images/guru/') ?>'+data.gambar+'" width="200px" class="img-responsive">'); // show photo
+                    // $('#photo-preview div').append('<br><input type="checkbox" name="remove_photo" value="'+data.gambar+'"/> Remove old photo when saving'); // remove photo
+                }
+                else
+                {
+                    $('#label-photo').text('Upload Photo'); // label photo upload
+                    $('#photo-preview div').text('(Tidak ada photo)');
+                }
 	        },
 	        error: function (jqXHR, textStatus, errorThrown)
 	        {
@@ -236,6 +268,17 @@
                 $('[name="id_mapel"]').val(data.id_mapel);
                 $('#modal_view').modal('show'); // show bootstrap modal when complete loaded
                 $('.modal-title').text('Preview Data guru Kelas'); // Set title to Bootstrap modal title
+                if(data.gambar)
+                {
+                    $('#label-photo').text('Change Photo'); // label photo upload
+                    $('#photo-preview div').html('<img src="<?= base_url('assets/images/guru/') ?>'+data.gambar+'" width="200px" class="img-responsive">'); // show photo
+                    // $('#photo-preview div').append('<br><input type="checkbox" name="remove_photo" value="'+data.gambar+'"/> Remove old photo when saving'); // remove photo
+                }
+                else
+                {
+                    $('#label-photo').text('Upload Photo'); // label photo upload
+                    $('#photo-preview div').text('(Tidak ada photo)');
+                }
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -343,9 +386,7 @@
                                         <?php } ?>
                                     </select>
                                     <span class="help-block"></span>
-                                </div>                                 
-	                        </div>
-                            <div class="col-md-6">
+                                </div>    
                                 <div class="form-group">
                                     <label >Jenis Kelamin</label>
                                     <select name="jenkel" class="form-control">
@@ -367,7 +408,9 @@
                                         <option value="Kong Hu Cu">Kong Hu Cu</option>
                                     </select>
                                     <span class="help-block"></span>
-                                </div>
+                                </div>                             
+	                        </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label >No. Telp</label>
                                     <input type="text" class="form-control" placeholder="No.Telp" name="no_telp" required maxlength="13" onkeypress='return check_int(event)'/>
@@ -377,6 +420,22 @@
                                     <label >Alamat</label>
                                     <textarea name="alamat" class="form-control" cols="30" rows="3"></textarea>
                                     <span class="help-block"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Foto</label><br>
+                                    <input id="uploadImage" type="file" name="gambar" onchange="PreviewImage();" class="form-control" accept='image/*' />
+                                    <p style="font-size: 0.7em; padding: 5px;">JPG, JPEG, PNG Max. 2MB</p>
+                                    <div class="form-group" id="photo-preview">
+                                        <div>
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="photo">
+                                        <div>
+                                            <img id="uploadPreview" style="max-width:200px;" class="img-thumbnail" />
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 		                </div>
@@ -428,9 +487,7 @@
                                         <?php } ?>
                                     </select>
                                     <span class="help-block"></span>
-                                </div>                                 
-                            </div>
-                            <div class="col-md-6">
+                                </div>   
                                 <div class="form-group">
                                     <label >Jenis Kelamin</label>
                                     <input type="text" class="form-control" placeholder="Jenis Kelamin" name="jenkel" required readonly/>
@@ -440,7 +497,9 @@
                                     <label >Agama</label>
                                     <input type="text" class="form-control" placeholder="Agama" name="agama" required readonly/>
                                     <span class="help-block"></span>
-                                </div>
+                                </div>                              
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label >No. Telp</label>
                                     <input type="text" class="form-control" placeholder="No.Telp" name="no_telp" required maxlength="13" onkeypress='return check_int(event)' readonly/>
@@ -450,6 +509,19 @@
                                     <label >Alamat</label>
                                     <textarea name="alamat" class="form-control" cols="30" rows="3" readonly></textarea>
                                     <span class="help-block"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Foto</label><br>
+                                    <div class="form-group" id="photo-preview">
+                                        <div>
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="photo">
+                                        <div>
+                                            <img id="uploadPreview" style="max-width:200px;" class="img-thumbnail" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

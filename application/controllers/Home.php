@@ -83,24 +83,49 @@ class Home extends CI_Controller {
 	        $tgl_lahir = date('Y-m-d', strtotime($tgl_lahir));        
 			$pass=$this->input->post('password');
 			$hash=password_hash($pass, PASSWORD_DEFAULT);
-			$data = array(
+			// jika password tidak di ganti
+			if ($row->password == $this->input->post('password')) {
+				$data = array(
+					'nama' => $this->input->post('nama'),
+					'id_kelas' => $this->input->post('id_kelas'),
+					'tmp_lahir' => $this->input->post('tmp_lahir'),
+					'tgl_lahir' => $tgl_lahir,
+					'jenkel' => $this->input->post('jenkel'),
+					'agama' => $this->input->post('agama'),
+					'alamat' => $this->input->post('alamat'),	
+				);
+				// fun update
+				$sess_data['nama'] = $this->input->post('nama');
+				$this->session->set_userdata($sess_data);
+				$this->DButama->UpdateDB($this->table,$where,$data);
+				$this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<strong>Akun anda sudah diperbaharui</strong> 
+							</div>');
+				redirect('home/profil/'.$this->session->userdata('nis').'','refresh');
 
-				'nama' => $this->input->post('nama'),
-				'id_kelas' => $this->input->post('id_kelas'),
-				'tmp_lahir' => $this->input->post('tmp_lahir'),
-				'tgl_lahir' => $tgl_lahir,
-				'jenkel' => $this->input->post('jenkel'),
-				'agama' => $this->input->post('agama'),
-				'alamat' => $this->input->post('alamat'),				
-				'password' => $hash
-			);
-
-			$this->DButama->UpdateDB($this->table,$where,$data);
-			$this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible" role="alert">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<strong>Akun anda sudah diperbaharui</strong> 
-						</div>');
-			redirect('home/profil/'.$this->session->userdata('nis').'','refresh');
+			// jika password diganti
+			} else {
+				$data = array(
+					'nama' => $this->input->post('nama'),
+					'id_kelas' => $this->input->post('id_kelas'),
+					'tmp_lahir' => $this->input->post('tmp_lahir'),
+					'tgl_lahir' => $tgl_lahir,
+					'jenkel' => $this->input->post('jenkel'),
+					'agama' => $this->input->post('agama'),
+					'alamat' => $this->input->post('alamat'),	
+					'password' => $hash
+				);
+				// fun update
+				$sess_data['nama'] = $this->input->post('nama');
+				$this->session->set_userdata($sess_data);
+				$this->DButama->UpdateDB($this->table,$where,$data);
+				$this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<strong>Akun anda sudah diperbaharui</strong> 
+							</div>');
+				redirect('home/profil/'.$this->session->userdata('nis').'','refresh');
+			}
 		
 		}
 	}

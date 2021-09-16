@@ -132,7 +132,7 @@
 										</a>
 									</li>
 								</ul><hr>
-								<div class="pcoded-navigation-label" style="position:absolute;bottom: 0;left: 20%; text-align: center;">Copyright© 2020<br>Allrights Reserved.</div>
+								<div class="pcoded-navigation-label" style="position:absolute;bottom: 0;left: 20%; text-align: center;">Copyright© 2021<br>Allrights Reserved.</div>
 
 							</div>
 						</nav>

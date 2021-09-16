@@ -15,6 +15,7 @@ class M_guru extends CI_Model {
 			tb_guru.alamat,
 			tb_guru.no_telp,
 			tb_guru.password,
+			tb_guru.gambar,
 			tb_mapel.id,
 			tb_mapel.nama_mapel,
 			');
@@ -39,6 +40,7 @@ class M_guru extends CI_Model {
 			tb_guru.alamat,
 			tb_guru.no_telp,
 			tb_guru.password,
+			tb_guru.gambar,
 			tb_mapel.id,
 			tb_mapel.nama_mapel,
 			');

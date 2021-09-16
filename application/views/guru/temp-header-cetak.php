@@ -45,8 +45,9 @@
 			<nav class="navbar header-navbar pcoded-header">
 				<div class="navbar-wrapper">
 					<div class="navbar-logo">
-						<a href="<?= site_url('guru/home') ?>">
-							<img class="img-fluid" src="<?= base_url('assets/') ?>assets/images/logo.png" alt="Theme-Logo" />
+						<a href="<?= site_url('guru/home') ?>" class="ml-1">
+							<!-- <img class="img-fluid" src="<?= base_url('assets/') ?>assets/images/logo.png" alt="Theme-Logo" /> -->
+							<h5>SD 04 Sungai Pinyuh</h5>
 						</a>
 						<a class="mobile-menu" id="mobile-collapse" href="#!">
 							<i class="feather icon-menu icon-toggle-right"></i>
@@ -189,7 +190,7 @@
 										</ul>
 									</li>
 								</ul><hr>
-								<div class="pcoded-navigation-label" style="text-align: center;">Copyright© 2020<br>Allrights Reserved.</div>
+								<div class="pcoded-navigation-label" style="position:absolute;bottom: 0;left: 20%; text-align: center;">Copyright© 2021<br>Allrights Reserved.</div>
 
 							</div>
 						</nav>
